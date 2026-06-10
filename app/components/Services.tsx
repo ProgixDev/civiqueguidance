@@ -71,7 +71,7 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-20 sm:py-24 bg-[#f5f5f5] relative overflow-hidden">
+    <section id="services" className="py-20 sm:py-24 bg-white relative overflow-hidden">
       <div className="max-w-content mx-auto px-page relative z-10">
         
         {/* En-tête avec la réplique exacte de ton soulignement incurvé rouge */}

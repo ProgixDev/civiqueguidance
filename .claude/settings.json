@@ -4,7 +4,8 @@
       "Read(//c/Users/Hp/**)",
       "PowerShell(git check-ignore docs .claude AGENTS.md 2>&1)",
       "Read(//c/Users/Hp/civiqueguidance/app/services/**)",
-      "PowerShell(git check-ignore -v docs/product/prd.md 2>&1)"
+      "PowerShell(git check-ignore -v docs/product/prd.md 2>&1)",
+      "PowerShell(npm run build 2>&1)"
     ]
   }
 }

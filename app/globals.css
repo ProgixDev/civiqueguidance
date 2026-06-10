@@ -138,6 +138,9 @@
        les bugs Safari iOS qui ne gère pas bien `zoom` non-standard */
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    /* Bloque tout défilement horizontal (débordement à droite en mobile).
+       `clip` empêche le scroll sans casser les éléments `position: sticky`. */
+    overflow-x: clip;
   }
   @media (min-width: 768px) {
     html {
@@ -147,20 +150,13 @@
   body {
     font-family: "Marianne", system-ui, sans-serif;
     color: var(--color-on-surface);
-    overflow-x: hidden;
+    overflow-x: clip;
+    max-width: 100%;
+    position: relative;
     background-color: var(--color-surface-container-lowest);
   }
 
-  /* Pattern de points (le même que Notre Processus), figé en fixed pour ne pas scroller */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M13 1a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0z' fill='%23161616' fill-opacity='0.03'/></svg>");
-    background-size: 24px 24px;
-  }
+  /* Fond blanc uni (motif de points retiré à la demande du client). */
 }
 
 @utility max-w-content {
