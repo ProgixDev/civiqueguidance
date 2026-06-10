@@ -11,8 +11,8 @@ const values = [
   },
   {
     icon: "balance",
-    title: "Maîtrise des procédures préfectorales",
-    desc: "Une pratique quotidienne du droit des étrangers et de la jurisprudence administrative pour anticiper les exigences des services de l'État.",
+    title: "Suivi des démarches administratives",
+    desc: "Une pratique régulière des procédures préfectorales pour anticiper les besoins de chaque dossier.",
   },
   {
     icon: "shield_person",

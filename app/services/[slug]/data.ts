@@ -52,11 +52,11 @@ export const services: Record<string, ServiceDetail> = {
   },
 
   etudiants: {
-    title: "Étudiants (France & Canada)",
+    title: "Étudiants (France)",
     intro:
-      "Accompagnement à toutes les étapes de votre projet d'études : orientation, inscription, visa et installation en France ou au Canada.",
+      "Accompagnement à toutes les étapes de votre projet d'études : orientation, inscription, visa et installation en France.",
     pourQui: [
-      "Étudiants souhaitant étudier en France ou au Canada",
+      "Étudiants souhaitant étudier en France",
       "Étudiants en France devant renouveler leur titre de séjour",
       "Étudiants changeant de statut (passage en salarié)",
     ],
@@ -260,6 +260,38 @@ export const services: Record<string, ServiceDetail> = {
       { n: "2", title: "Stratégie", desc: "Choix du motif de régularisation." },
       { n: "3", title: "Dossier", desc: "Rassemblement des preuves." },
       { n: "4", title: "Dépôt", desc: "Soumission à la préfecture." },
+    ],
+  },
+
+  cv: {
+    title: "CV & Lettre de motivation",
+    intro:
+      "Aide à la rédaction de votre CV et de votre lettre de motivation selon les normes françaises, pour mettre en valeur votre parcours et vos compétences.",
+    pourQui: [
+      "Personnes cherchant un emploi en France",
+      "Étudiants cherchant un stage ou une alternance",
+      "Personnes en situation d'insertion professionnelle",
+      "Personnes souhaitant améliorer leur CV existant",
+    ],
+    ceQueNousFaisons: [
+      "Aide à structurer votre CV selon les normes françaises",
+      "Mise en valeur de vos compétences et expériences",
+      "Conseils pour adapter votre CV au poste visé",
+      "Aide à la rédaction de la lettre de motivation",
+    ],
+    ceQueNousNeFaisonsPas: [],
+    transparenceText:
+      "DémarchesCivique vous accompagne dans la structuration et la mise en forme de votre CV et de votre lettre de motivation. Vous restez l'auteur de votre candidature : nous vous conseillons et vous guidons à chaque étape.",
+    documents: [
+      "CV actuel (si existant)",
+      "Liste de vos expériences professionnelles",
+      "Diplômes et certifications",
+      "Offre d'emploi visée (si applicable)",
+    ],
+    etapes: [
+      { n: "1", title: "Bilan", desc: "Analyse de votre parcours." },
+      { n: "2", title: "Rédaction", desc: "Structuration et mise en forme." },
+      { n: "3", title: "Finalisation", desc: "Relecture et ajustements." },
     ],
   },
 };

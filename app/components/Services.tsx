@@ -22,8 +22,8 @@ const services = [
   {
     slug: "etudiants",
     icon: "school",
-    title: "Étudiants (France & Canada)",
-    desc: "Études en France ou Canada. Inscription, visa, titre de séjour étudiant.",
+    title: "Étudiants (France)",
+    desc: "Études en France. Inscription, visa, titre de séjour étudiant.",
     gridClass: "md:col-span-1 lg:col-span-5",
     bgImage: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80",
   },
@@ -71,7 +71,7 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-20 sm:py-24 bg-transparent relative overflow-hidden">
+    <section id="services" className="py-20 sm:py-24 bg-[#f5f5f5] relative overflow-hidden">
       <div className="max-w-content mx-auto px-page relative z-10">
         
         {/* En-tête avec la réplique exacte de ton soulignement incurvé rouge */}
@@ -90,8 +90,8 @@ export default function Services() {
               <BrushUnderline />
             </div>
 
-            <p className="text-[14px] text-on-surface-variant leading-relaxed opacity-80 mt-5">
-              Une ingénierie juridique rigoureuse pour sécuriser et accélérer chaque étape de vos démarches réglementaires.
+            <p className="text-[15px] sm:text-base text-on-surface-variant leading-relaxed mt-5">
+              Un accompagnement rigoureux pour sécuriser et accélérer chaque étape de vos démarches administratives.
             </p>
           </div>
           

@@ -33,8 +33,8 @@ const allServices: ServiceListItem[] = [
   {
     slug: "etudiants",
     icon: "school",
-    title: "Étudiants (France & Canada)",
-    desc: "Accompagnement complet pour vos études en France ou au Canada. Inscription, visa étudiant, titre de séjour, et démarches administratives.",
+    title: "Étudiants (France)",
+    desc: "Accompagnement complet pour vos études en France. Inscription, visa étudiant, titre de séjour, et démarches administratives.",
     bgImage:
       "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80",
   },
@@ -76,7 +76,7 @@ const allServices: ServiceListItem[] = [
     bgImage: "/logement.png",
   },
   {
-    slug: null,
+    slug: "cv",
     icon: "description",
     title: "CV & Lettre de motivation",
     desc: "Aide à la rédaction de votre CV et lettre de motivation adaptés au marché français. Mise en valeur de votre parcours et de vos compétences.",

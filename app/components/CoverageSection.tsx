@@ -43,7 +43,7 @@ export default function CoverageSection() {
           </h2>
           <p className="text-[16px] text-on-surface-variant max-w-2xl mx-auto">
             Pas de cabinet physique. Un accompagnement entièrement à distance,
-            adapté à votre rythme — depuis la France ou le Canada.
+            adapté à votre rythme — partout en France.
           </p>
         </div>
 

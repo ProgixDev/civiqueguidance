@@ -163,7 +163,7 @@ export async function deleteDemande(id: string): Promise<void> {
 
 export const SERVICE_LABELS: Record<string, string> = {
   "demandeurs-asile": "Demandeurs d'asile",
-  etudiants: "Étudiants (France & Canada)",
+  etudiants: "Étudiants (France)",
   "titre-de-sejour": "Titre de séjour",
   naturalisation: "Naturalisation française",
   "regroupement-familial": "Regroupement familial",

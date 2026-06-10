@@ -63,8 +63,8 @@ export default function Footer() {
           </div>
 
           <p className="text-[14px] text-white/70 mb-8 leading-relaxed max-w-sm">
-            Accompagnement administratif privé et indépendant pour les
-            étrangers en France. Une expertise au service de votre intégration.
+            Service privé et indépendant d&apos;accompagnement administratif
+            pour les étrangers en France, au service de votre intégration.
           </p>
 
           {/* Coordonnées de contact */}

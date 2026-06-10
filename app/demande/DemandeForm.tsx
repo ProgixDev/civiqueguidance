@@ -6,7 +6,7 @@ import { saveDemande, SERVICE_LABELS } from "@/lib/demandes";
 
 const servicesOptions = [
   { value: "demandeurs-asile", label: "Demandeurs d'asile" },
-  { value: "etudiants", label: "Étudiants (France & Canada)" },
+  { value: "etudiants", label: "Étudiants (France)" },
   { value: "titre-de-sejour", label: "Titre de séjour" },
   { value: "naturalisation", label: "Naturalisation française" },
   { value: "regroupement-familial", label: "Regroupement familial" },
