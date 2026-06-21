@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getStripe, isStripeConfigured } from "@/lib/stripe";
+import { createClient } from "@/lib/supabase/server";
 
 /**
  * POST /api/stripe/checkout
@@ -44,6 +45,19 @@ export async function POST(req: Request) {
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
+  // Rattache le paiement au client connecté (s'il y en a un) pour qu'il le
+  // retrouve dans son espace. Un visiteur anonyme peut payer sans compte.
+  let clientId = "";
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    clientId = user?.id ?? "";
+  } catch {
+    // Supabase non configuré ou pas de session : paiement anonyme autorisé.
+  }
+
   try {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
@@ -63,6 +77,7 @@ export async function POST(req: Request) {
       customer_email: body.customerEmail,
       metadata: {
         demande_id: body.demandeId ?? "",
+        client_id: clientId,
       },
       success_url: `${siteUrl}/compte?payment=success`,
       cancel_url: `${siteUrl}/compte?payment=cancel`,

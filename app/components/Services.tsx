@@ -16,6 +16,7 @@ const services = [
     icon: "gavel",
     title: "Demandeurs d'asile",
     desc: "Accompagnement pour votre demande d'asile. Aide OFPRA, préparation entretien, suivi complet.",
+    prix: "600 €",
     gridClass: "md:col-span-2 lg:col-span-7",
     bgImage: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80",
   },
@@ -24,6 +25,7 @@ const services = [
     icon: "school",
     title: "Étudiants (France)",
     desc: "Études en France. Inscription, visa, titre de séjour étudiant.",
+    prix: "250 €",
     gridClass: "md:col-span-1 lg:col-span-5",
     bgImage: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80",
   },
@@ -32,6 +34,7 @@ const services = [
     icon: "badge",
     title: "Titre de séjour",
     desc: "Première demande ou renouvellement. Constitution et vérification du dossier.",
+    prix: "250 €",
     gridClass: "md:col-span-1 lg:col-span-5",
     bgImage: "/titre-de-sejour.png",
   },
@@ -40,6 +43,7 @@ const services = [
     icon: "flag",
     title: "Naturalisation",
     desc: "Demande de nationalité française. Préparation complète du dossier.",
+    prix: "250 €",
     gridClass: "md:col-span-2 lg:col-span-7",
     bgImage: "/naturalisation.png",
   },
@@ -48,6 +52,7 @@ const services = [
     icon: "diversity_3",
     title: "Regroupement familial",
     desc: "Faire venir votre famille en France. Dossier OFII, conditions de ressources.",
+    prix: "300 €",
     gridClass: "md:col-span-1 lg:col-span-6",
     bgImage: "/regroupement.png",
   },
@@ -56,6 +61,7 @@ const services = [
     icon: "balance",
     title: "Régularisation",
     desc: "Régulariser votre situation administrative en France.",
+    prix: "600 €",
     gridClass: "md:col-span-1 lg:col-span-6",
     bgImage: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80",
   },
@@ -64,6 +70,7 @@ const services = [
     icon: "home",
     title: "Aide au logement",
     desc: "Trouver un logement en France. Dossier de location, APL, démarches CAF.",
+    prix: "250 €",
     gridClass: "md:col-span-1 lg:col-span-6 lg:col-start-4",
     bgImage: "/logement.png",
   },
@@ -127,6 +134,11 @@ export default function Services() {
                 {/* Dégradé doux : noir dense en bas pour lisibilité du texte, transparent en haut */}
                 <div className="absolute inset-0 bg-linear-to-t from-ink-black/90 via-ink-black/40 to-transparent" />
               </div>
+
+              {/* Badge tarif */}
+              <span className="absolute top-5 right-5 z-20 inline-flex items-center rounded-full bg-white/15 backdrop-blur-md border border-white/25 px-3 py-1 text-[12px] font-extrabold tracking-tight text-white shadow-sm">
+                {s.prix}
+              </span>
 
               {/* CONTENU AU PREMIER PLAN */}
               <div className="relative z-10 flex flex-col h-full justify-between grow">

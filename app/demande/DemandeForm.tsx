@@ -13,6 +13,8 @@ const servicesOptions = [
   { value: "regularisation", label: "Régularisation administrative" },
   { value: "logement", label: "Aide au logement" },
   { value: "cv", label: "CV & Lettre de motivation" },
+  { value: "dcem", label: "DCEM (enfants mineurs)" },
+  { value: "taj", label: "Effacement de TAJ" },
   { value: "autre", label: "Autre démarche" },
 ];
 

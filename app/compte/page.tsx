@@ -8,6 +8,7 @@ import {
   loadMyDemandes,
   loadMyDocuments,
   loadMySignatures,
+  loadMyPaidDemandeIds,
   uploadDocument,
   deleteDocument,
   getDocumentDownloadUrl,
@@ -15,7 +16,11 @@ import {
   type ClientDocument,
   type ClientSignature,
 } from "@/lib/client-data";
-import type { Demande } from "@/lib/demandes";
+import {
+  getServicePriceCents,
+  formatPriceCents,
+  type Demande,
+} from "@/lib/demandes";
 
 export default function ClientHomePage() {
   return (
@@ -29,34 +34,81 @@ function ClientContent({ userEmail }: { userEmail: string }) {
   const [demandes, setDemandes] = useState<Demande[]>([]);
   const [documents, setDocuments] = useState<ClientDocument[]>([]);
   const [signatures, setSignatures] = useState<ClientSignature[]>([]);
+  const [paidIds, setPaidIds] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [payingId, setPayingId] = useState<string | null>(null);
+  const [payError, setPayError] = useState<string | null>(null);
+  const [payNotice, setPayNotice] = useState<"success" | "cancel" | null>(null);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const [d, docs, sigs] = await Promise.all([
+      const [d, docs, sigs, paid] = await Promise.all([
         loadMyDemandes(),
         loadMyDocuments(),
         loadMySignatures(),
+        loadMyPaidDemandeIds(),
       ]);
       setDemandes(d);
       setDocuments(docs);
       setSignatures(sigs);
+      setPaidIds(paid);
       setLoading(false);
     })();
   }, []);
 
+  // Affiche un message au retour de Stripe Checkout (success_url / cancel_url),
+  // puis nettoie l'URL. Lu via window pour éviter une Suspense boundary.
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search).get("payment");
+    if (p === "success" || p === "cancel") {
+      setPayNotice(p);
+      window.history.replaceState({}, "", "/compte");
+    }
+  }, []);
+
   async function refresh() {
-    const [d, docs, sigs] = await Promise.all([
+    const [d, docs, sigs, paid] = await Promise.all([
       loadMyDemandes(),
       loadMyDocuments(),
       loadMySignatures(),
+      loadMyPaidDemandeIds(),
     ]);
     setDemandes(d);
     setDocuments(docs);
     setSignatures(sigs);
+    setPaidIds(paid);
+  }
+
+  async function onPay(d: Demande) {
+    const amountCents = getServicePriceCents(d.service);
+    if (!amountCents) return; // service « sur devis » : pas de paiement en ligne
+    setPayError(null);
+    setPayingId(d.id);
+    try {
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amountCents,
+          description: `Accompagnement — ${d.serviceLabel}`,
+          customerEmail: userEmail,
+          demandeId: d.id,
+        }),
+      });
+      const data = await res.json();
+      if (!data.ok || !data.url) {
+        setPayError(data.error ?? "Le paiement n'a pas pu démarrer. Réessayez.");
+        setPayingId(null);
+        return;
+      }
+      window.location.href = data.url; // redirection vers Stripe Checkout
+    } catch {
+      setPayError("Le paiement n'a pas pu démarrer. Réessayez.");
+      setPayingId(null);
+    }
   }
 
   async function onUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -100,6 +152,28 @@ function ClientContent({ userEmail }: { userEmail: string }) {
           Connecté en tant que <span className="font-bold">{userEmail}</span>
         </p>
       </div>
+
+      {/* Retour de Stripe Checkout */}
+      {payNotice === "success" && (
+        <div className="bg-[#e6f7e9] border border-[#9be0aa] text-[#1e7a3a] rounded-xl px-4 py-3 text-[14px] flex items-center gap-2">
+          <span className="material-symbols-outlined text-[20px]">
+            check_circle
+          </span>
+          Paiement reçu. Un reçu vous a été envoyé par email. Merci !
+        </div>
+      )}
+      {payNotice === "cancel" && (
+        <div className="bg-[#fff7e6] border border-[#ffd591] text-[#a25a00] rounded-xl px-4 py-3 text-[14px] flex items-center gap-2">
+          <span className="material-symbols-outlined text-[20px]">info</span>
+          Paiement annulé. Vous pouvez réessayer quand vous le souhaitez.
+        </div>
+      )}
+      {payError && (
+        <div className="bg-marianne-red/5 border border-marianne-red/20 text-marianne-red rounded-xl px-4 py-3 text-[13px] flex items-center gap-2">
+          <span className="material-symbols-outlined text-[18px]">error</span>
+          {payError}
+        </div>
+      )}
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
@@ -160,7 +234,15 @@ function ClientContent({ userEmail }: { userEmail: string }) {
                     {new Date(d.createdAt).toLocaleDateString("fr-FR")}
                   </p>
                 </div>
-                <StatutBadge statut={d.statut} />
+                <div className="flex items-center gap-3 shrink-0">
+                  <StatutBadge statut={d.statut} />
+                  <PaymentAction
+                    demande={d}
+                    paid={paidIds.has(d.id)}
+                    paying={payingId === d.id}
+                    onPay={() => onPay(d)}
+                  />
+                </div>
               </article>
             ))}
           </div>
@@ -341,6 +423,56 @@ function StatCard({
         {value}
       </p>
     </div>
+  );
+}
+
+function PaymentAction({
+  demande,
+  paid,
+  paying,
+  onPay,
+}: {
+  demande: Demande;
+  paid: boolean;
+  paying: boolean;
+  onPay: () => void;
+}) {
+  if (paid) {
+    return (
+      <span className="inline-flex items-center gap-1 text-[12px] font-bold rounded-full px-3 py-1.5 border bg-[#e6f7e9] text-[#1e7a3a] border-[#9be0aa]">
+        <span className="material-symbols-outlined text-[16px]">paid</span>
+        Payé
+      </span>
+    );
+  }
+
+  const priceCents = getServicePriceCents(demande.service);
+  if (priceCents === null) {
+    return (
+      <span className="text-[12px] font-semibold text-on-surface-variant">
+        Sur devis
+      </span>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={onPay}
+      disabled={paying}
+      className="inline-flex items-center gap-1.5 bg-french-blue hover:bg-[#000066] disabled:opacity-60 text-white px-4 py-2 rounded-lg text-[13px] font-bold transition-all active:scale-[0.99] whitespace-nowrap"
+    >
+      {paying ? (
+        "Redirection…"
+      ) : (
+        <>
+          <span className="material-symbols-outlined text-[16px]">
+            credit_card
+          </span>
+          Payer {formatPriceCents(priceCents)}
+        </>
+      )}
+    </button>
   );
 }
 

@@ -18,6 +18,7 @@ type ServiceListItem = {
   icon: string;
   title: string;
   desc: string;
+  prix: string;
   bgImage: string;
 };
 
@@ -27,6 +28,7 @@ const allServices: ServiceListItem[] = [
     icon: "gavel",
     title: "Demandeurs d'asile",
     desc: "Accompagnement pour votre demande d'asile en France. Aide à la constitution du dossier OFPRA, préparation à l'entretien, et suivi de votre procédure.",
+    prix: "600 €",
     bgImage:
       "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80",
   },
@@ -35,6 +37,7 @@ const allServices: ServiceListItem[] = [
     icon: "school",
     title: "Étudiants (France)",
     desc: "Accompagnement complet pour vos études en France. Inscription, visa étudiant, titre de séjour, et démarches administratives.",
+    prix: "250 €",
     bgImage:
       "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80",
   },
@@ -43,6 +46,7 @@ const allServices: ServiceListItem[] = [
     icon: "badge",
     title: "Titre de séjour",
     desc: "Aide pour votre première demande ou renouvellement de titre de séjour. Constitution du dossier, vérification des documents, et suivi de votre demande.",
+    prix: "250 €",
     bgImage: "/titre-de-sejour.png",
   },
   {
@@ -50,6 +54,7 @@ const allServices: ServiceListItem[] = [
     icon: "flag",
     title: "Naturalisation",
     desc: "Accompagnement pour votre demande de naturalisation française. Préparation du dossier, vérification des conditions, et suivi de la procédure.",
+    prix: "250 €",
     bgImage: "/naturalisation.png",
   },
   {
@@ -57,6 +62,7 @@ const allServices: ServiceListItem[] = [
     icon: "diversity_3",
     title: "Regroupement familial",
     desc: "Aide pour faire venir votre famille en France. Constitution du dossier OFII, vérification des conditions de ressources et de logement.",
+    prix: "300 €",
     bgImage:
       "/regroupement.png",
   },
@@ -65,6 +71,7 @@ const allServices: ServiceListItem[] = [
     icon: "balance",
     title: "Régularisation administrative",
     desc: "Accompagnement pour régulariser votre situation administrative en France. Analyse de votre situation et constitution du dossier adapté.",
+    prix: "600 €",
     bgImage:
       "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80",
   },
@@ -73,6 +80,7 @@ const allServices: ServiceListItem[] = [
     icon: "home",
     title: "Aide au logement",
     desc: "Accompagnement pour trouver un logement en France. Constitution du dossier de location, démarches CAF (APL), et accès au logement social (DALO, SYPLO).",
+    prix: "250 €",
     bgImage: "/logement.png",
   },
   {
@@ -80,8 +88,27 @@ const allServices: ServiceListItem[] = [
     icon: "description",
     title: "CV & Lettre de motivation",
     desc: "Aide à la rédaction de votre CV et lettre de motivation adaptés au marché français. Mise en valeur de votre parcours et de vos compétences.",
+    prix: "45 €",
     bgImage:
       "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    slug: "dcem",
+    icon: "child_care",
+    title: "DCEM (enfants mineurs)",
+    desc: "Demande de Document de Circulation pour Étranger Mineur. Permet à votre enfant mineur de voyager hors de France et d'y revenir sans visa.",
+    prix: "Sur devis",
+    bgImage:
+      "https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    slug: "taj",
+    icon: "folder_delete",
+    title: "Effacement de TAJ",
+    desc: "Demande d'effacement ou de rectification de vos données dans le fichier des antécédents judiciaires (TAJ), pour débloquer vos démarches.",
+    prix: "Sur devis",
+    bgImage:
+      "https://images.unsplash.com/photo-1589391886645-d51941baf7fb?auto=format&fit=crop&w=600&q=80",
   },
 ];
 
@@ -145,6 +172,11 @@ export default function ServicesIndexPage() {
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-ink-black/90 via-ink-black/40 to-transparent" />
                   </div>
+
+                  {/* Badge tarif */}
+                  <span className="absolute top-5 right-5 z-20 inline-flex items-center rounded-full bg-white/15 backdrop-blur-md border border-white/25 px-3 py-1 text-[12px] font-extrabold tracking-tight text-white shadow-sm">
+                    {s.prix}
+                  </span>
 
                   {/* Contenu au premier plan */}
                   <div className="relative z-10 flex flex-col h-full justify-between grow">

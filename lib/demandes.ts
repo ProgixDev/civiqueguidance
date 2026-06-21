@@ -170,5 +170,38 @@ export const SERVICE_LABELS: Record<string, string> = {
   regularisation: "Régularisation administrative",
   logement: "Aide au logement",
   cv: "CV & Lettre de motivation",
+  dcem: "DCEM (enfants mineurs)",
+  taj: "Effacement de TAJ",
   autre: "Autre démarche",
 };
+
+/**
+ * Tarifs fixes par service, en centimes — source unique pour le paiement Stripe.
+ * Les services « sur devis » (dcem, taj, autre) sont volontairement absents :
+ * leur prix est fixé au cas par cas, donc pas de paiement en ligne automatique.
+ */
+export const SERVICE_PRICES_CENTS: Record<string, number> = {
+  "demandeurs-asile": 60000,
+  etudiants: 25000,
+  "titre-de-sejour": 25000,
+  naturalisation: 25000,
+  "regroupement-familial": 30000,
+  regularisation: 60000,
+  logement: 25000,
+  cv: 4500,
+};
+
+/** Prix fixe d'un service en centimes, ou null si le service est « sur devis ». */
+export function getServicePriceCents(service: string): number | null {
+  return SERVICE_PRICES_CENTS[service] ?? null;
+}
+
+/** Formate un montant en centimes en chaîne « 250 € » (locale FR). */
+export function formatPriceCents(cents: number): string {
+  return (cents / 100).toLocaleString("fr-FR", {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+}

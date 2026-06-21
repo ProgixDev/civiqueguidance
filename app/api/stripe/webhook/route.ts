@@ -61,7 +61,7 @@ export async function POST(req: Request) {
     currency: string | null;
     customer_email: string | null;
     customer_details?: { name?: string | null } | null;
-    metadata?: { demande_id?: string } | null;
+    metadata?: { demande_id?: string; client_id?: string } | null;
     payment_status: string;
   };
 
@@ -78,6 +78,7 @@ export async function POST(req: Request) {
       currency: session.currency ?? "eur",
       status: session.payment_status === "paid" ? "paid" : "pending",
       demande_id: session.metadata?.demande_id || null,
+      client_id: session.metadata?.client_id || null,
       receipt_sent_at: new Date().toISOString(),
     });
   } else {

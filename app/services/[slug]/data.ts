@@ -294,4 +294,74 @@ export const services: Record<string, ServiceDetail> = {
       { n: "3", title: "Finalisation", desc: "Relecture et ajustements." },
     ],
   },
+
+  dcem: {
+    title: "Document de circulation pour étranger mineur (DCEM)",
+    intro:
+      "Accompagnement pour obtenir le Document de Circulation pour Étranger Mineur (DCEM), qui permet à votre enfant mineur étranger de voyager hors de France et d'y revenir sans visa.",
+    pourQui: [
+      "Parents étrangers résidant régulièrement en France avec un enfant mineur",
+      "Familles dont l'enfant mineur né à l'étranger doit voyager",
+      "Enfants mineurs étrangers scolarisés en France amenés à sortir du territoire",
+    ],
+    ceQueNousFaisons: [
+      "Vérification de l'éligibilité de l'enfant au DCEM",
+      "Liste personnalisée des pièces à fournir",
+      "Aide à la constitution et à la vérification du dossier",
+      "Aide à la prise de rendez-vous en préfecture",
+    ],
+    ceQueNousNeFaisonsPas: [
+      "Garantir la délivrance du document par la préfecture",
+      "Créer de faux documents d'état civil ou de filiation",
+      "Vous représenter physiquement à la préfecture",
+    ],
+    transparenceText: TRANSPARENCE_BASE,
+    documents: [
+      "Titre de séjour du parent en cours de validité",
+      "Acte de naissance de l'enfant avec filiation",
+      "Passeport de l'enfant",
+      "Justificatif de domicile et photos d'identité de l'enfant",
+    ],
+    etapes: [
+      { n: "1", title: "Éligibilité", desc: "Vérification de la situation de l'enfant." },
+      { n: "2", title: "Dossier", desc: "Rassemblement des pièces justificatives." },
+      { n: "3", title: "Rendez-vous", desc: "Prise de rendez-vous en préfecture." },
+      { n: "4", title: "Suivi", desc: "Accompagnement jusqu'à la remise du document." },
+    ],
+  },
+
+  taj: {
+    title: "Effacement du fichier TAJ",
+    intro:
+      "Accompagnement pour demander l'effacement ou la rectification de vos données dans le fichier TAJ (Traitement des Antécédents Judiciaires), qui peut affecter vos démarches de séjour, de naturalisation ou d'emploi.",
+    pourQui: [
+      "Personnes inscrites au TAJ après un classement sans suite, une relaxe ou un acquittement",
+      "Personnes dont une démarche administrative est bloquée par une inscription au TAJ",
+      "Personnes souhaitant faire valoir leur droit à l'effacement de leurs données",
+    ],
+    ceQueNousFaisons: [
+      "Analyse de votre situation et des motifs d'inscription",
+      "Aide à la rédaction de la demande d'effacement ou de rectification",
+      "Orientation vers le bon interlocuteur (procureur, magistrat référent)",
+      "Aide à la constitution du dossier de demande",
+    ],
+    ceQueNousNeFaisonsPas: [
+      "Garantir l'effacement, qui relève d'une décision du magistrat",
+      "Vous représenter en justice ou tenir un rôle d'avocat",
+      "Accéder directement au fichier à votre place",
+    ],
+    transparenceText: TRANSPARENCE_BASE,
+    documents: [
+      "Pièce d'identité ou titre de séjour",
+      "Décision de justice (classement sans suite, relaxe, acquittement) si disponible",
+      "Justificatifs liés à la démarche bloquée",
+      "Tout courrier reçu mentionnant votre inscription",
+    ],
+    etapes: [
+      { n: "1", title: "Analyse", desc: "Étude de votre situation." },
+      { n: "2", title: "Demande", desc: "Rédaction du courrier d'effacement." },
+      { n: "3", title: "Dépôt", desc: "Envoi au bon interlocuteur." },
+      { n: "4", title: "Suivi", desc: "Accompagnement jusqu'à la réponse." },
+    ],
+  },
 };

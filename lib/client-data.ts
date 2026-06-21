@@ -56,6 +56,38 @@ export async function loadMyDemandes(): Promise<Demande[]> {
   }
 }
 
+/**
+ * Renvoie l'ensemble des `demande_id` déjà payés (status = 'paid') par le client
+ * connecté. Sert à masquer le bouton « Payer » sur une demande déjà réglée.
+ */
+export async function loadMyPaidDemandeIds(): Promise<Set<string>> {
+  if (!isSupabaseConfigured()) return new Set();
+  try {
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return new Set();
+    const { data, error } = await supabase
+      .from("payments")
+      .select("demande_id")
+      .eq("client_id", user.id)
+      .eq("status", "paid");
+    if (error) {
+      console.error("[client-data] loadMyPaidDemandeIds:", error.message);
+      return new Set();
+    }
+    return new Set(
+      (data ?? [])
+        .map((p) => p.demande_id as string | null)
+        .filter((id): id is string => Boolean(id))
+    );
+  } catch (e) {
+    console.error("[client-data] loadMyPaidDemandeIds exception:", e);
+    return new Set();
+  }
+}
+
 export type ClientDocument = {
   id: string;
   createdAt: string;
