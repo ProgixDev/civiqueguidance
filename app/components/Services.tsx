@@ -71,8 +71,26 @@ const services = [
     title: "Aide au logement",
     desc: "Trouver un logement en France. Dossier de location, APL, démarches CAF.",
     prix: "250 €",
-    gridClass: "md:col-span-1 lg:col-span-6 lg:col-start-4",
+    gridClass: "md:col-span-1 lg:col-span-4",
     bgImage: "/logement.png",
+  },
+  {
+    slug: "dcem",
+    icon: "child_care",
+    title: "DCEM (enfants mineurs)",
+    desc: "Document de circulation pour votre enfant mineur. Voyager hors de France et revenir sans visa.",
+    prix: "Sur devis",
+    gridClass: "md:col-span-1 lg:col-span-4",
+    bgImage: "https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    slug: "taj",
+    icon: "folder_delete",
+    title: "Effacement de TAJ",
+    desc: "Effacement ou rectification de vos données au fichier des antécédents judiciaires (TAJ).",
+    prix: "Sur devis",
+    gridClass: "md:col-span-2 lg:col-span-4",
+    bgImage: "https://images.unsplash.com/photo-1589391886645-d51941baf7fb?auto=format&fit=crop&w=600&q=80",
   },
 ];
 
@@ -135,10 +153,17 @@ export default function Services() {
                 <div className="absolute inset-0 bg-linear-to-t from-ink-black/90 via-ink-black/40 to-transparent" />
               </div>
 
-              {/* Badge tarif */}
-              <span className="absolute top-5 right-5 z-20 inline-flex items-center rounded-full bg-white/15 backdrop-blur-md border border-white/25 px-3 py-1 text-[12px] font-extrabold tracking-tight text-white shadow-sm">
-                {s.prix}
-              </span>
+              {/* Badges : « Nouveau » (services récents) + tarif */}
+              <div className="absolute top-5 right-5 z-20 flex items-center gap-2">
+                {(s.slug === "dcem" || s.slug === "taj") && (
+                  <span className="inline-flex items-center rounded-full bg-marianne-red px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-sm">
+                    Nouveau
+                  </span>
+                )}
+                <span className="inline-flex items-center rounded-full bg-white/15 backdrop-blur-md border border-white/25 px-3 py-1 text-[12px] font-extrabold tracking-tight text-white shadow-sm">
+                  {s.prix}
+                </span>
+              </div>
 
               {/* CONTENU AU PREMIER PLAN */}
               <div className="relative z-10 flex flex-col h-full justify-between grow">

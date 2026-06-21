@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { saveDemande, SERVICE_LABELS } from "@/lib/demandes";
+import {
+  saveDemande,
+  SERVICE_LABELS,
+  getServicePriceCents,
+} from "@/lib/demandes";
 
 const servicesOptions = [
   { value: "demandeurs-asile", label: "Demandeurs d'asile" },
@@ -34,13 +38,15 @@ export default function DemandeForm() {
     setError(null);
     const fd = new FormData(e.currentTarget);
     const service = String(fd.get("service") ?? "");
+    const email = String(fd.get("email") ?? "");
+    const serviceLabel = SERVICE_LABELS[service] ?? service;
 
     const result = await saveDemande({
       name: String(fd.get("name") ?? ""),
-      email: String(fd.get("email") ?? ""),
+      email,
       phone: String(fd.get("phone") ?? ""),
       service,
-      serviceLabel: SERVICE_LABELS[service] ?? service,
+      serviceLabel,
       message: String(fd.get("message") ?? ""),
       date: prefilledDate || undefined,
       time: prefilledTime || undefined,
@@ -52,6 +58,33 @@ export default function DemandeForm() {
       );
       setStatus("idle");
       return;
+    }
+
+    // Paiement immédiat pour les services à tarif fixe : on enchaîne sur Stripe
+    // Checkout. Les services « sur devis » (DCEM, TAJ, autre) affichent juste la
+    // confirmation — le conseiller enverra un devis. Si Stripe n'est pas
+    // configuré ou échoue, on ne bloque pas : on retombe sur la confirmation.
+    const amountCents = getServicePriceCents(service);
+    if (amountCents) {
+      try {
+        const res = await fetch("/api/stripe/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amountCents,
+            description: `Accompagnement — ${serviceLabel}`,
+            customerEmail: email,
+            demandeId: result.id,
+          }),
+        });
+        const data = await res.json();
+        if (data.ok && data.url) {
+          window.location.href = data.url; // redirection vers Stripe
+          return;
+        }
+      } catch {
+        // silencieux : on affiche la confirmation ci-dessous
+      }
     }
 
     setStatus("sent");

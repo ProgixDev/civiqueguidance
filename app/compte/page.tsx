@@ -142,6 +142,18 @@ function ClientContent({ userEmail }: { userEmail: string }) {
     if (ok) await refresh();
   }
 
+  // Demandes encore à régler (tarif fixe, non payées, non annulées).
+  const toPay = demandes.filter(
+    (d) =>
+      d.statut !== "Annulé" &&
+      !paidIds.has(d.id) &&
+      getServicePriceCents(d.service) !== null
+  );
+  const totalToPayCents = toPay.reduce(
+    (sum, d) => sum + (getServicePriceCents(d.service) ?? 0),
+    0
+  );
+
   return (
     <div className="space-y-8">
       <div>
@@ -173,6 +185,66 @@ function ClientContent({ userEmail }: { userEmail: string }) {
           <span className="material-symbols-outlined text-[18px]">error</span>
           {payError}
         </div>
+      )}
+
+      {/* Bandeau « À régler » — paiement bien en évidence en haut de la page */}
+      {toPay.length > 0 && (
+        <section className="bg-linear-to-br from-french-blue to-[#000053] text-white rounded-2xl p-6 sm:p-7 shadow-lg relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-56 h-56 bg-marianne-red/25 blur-3xl rounded-full -translate-y-1/3 translate-x-1/4 pointer-events-none" />
+          <div className="relative">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="material-symbols-outlined">credit_card</span>
+              <h2 className="text-lg sm:text-xl font-black tracking-tight">
+                {toPay.length === 1
+                  ? "1 accompagnement à régler"
+                  : `${toPay.length} accompagnements à régler`}
+              </h2>
+            </div>
+            <p className="text-white/80 text-[14px] mb-5">
+              Total à payer :{" "}
+              <span className="font-bold text-white">
+                {formatPriceCents(totalToPayCents)}
+              </span>
+            </p>
+            <div className="space-y-2.5">
+              {toPay.map((d) => {
+                const price = getServicePriceCents(d.service) ?? 0;
+                return (
+                  <div
+                    key={d.id}
+                    className="flex items-center justify-between gap-3 bg-white/10 border border-white/15 rounded-xl px-4 py-3"
+                  >
+                    <div className="min-w-0">
+                      <p className="font-bold text-[14px] truncate">
+                        {d.serviceLabel}
+                      </p>
+                      <p className="text-white/70 text-[12px]">
+                        {formatPriceCents(price)}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => onPay(d)}
+                      disabled={payingId === d.id}
+                      className="inline-flex items-center gap-1.5 bg-marianne-red hover:brightness-110 disabled:opacity-60 text-white px-4 py-2.5 rounded-lg text-[13px] font-bold transition-all active:scale-[0.99] whitespace-nowrap shrink-0 shadow-sm"
+                    >
+                      {payingId === d.id ? (
+                        "Redirection…"
+                      ) : (
+                        <>
+                          Payer {formatPriceCents(price)}
+                          <span className="material-symbols-outlined text-[16px]">
+                            arrow_forward
+                          </span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
       )}
 
       {/* Stats */}
@@ -236,12 +308,7 @@ function ClientContent({ userEmail }: { userEmail: string }) {
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
                   <StatutBadge statut={d.statut} />
-                  <PaymentAction
-                    demande={d}
-                    paid={paidIds.has(d.id)}
-                    paying={payingId === d.id}
-                    onPay={() => onPay(d)}
-                  />
+                  <PaymentAction demande={d} paid={paidIds.has(d.id)} />
                 </div>
               </article>
             ))}
@@ -429,13 +496,9 @@ function StatCard({
 function PaymentAction({
   demande,
   paid,
-  paying,
-  onPay,
 }: {
   demande: Demande;
   paid: boolean;
-  paying: boolean;
-  onPay: () => void;
 }) {
   if (paid) {
     return (
@@ -446,6 +509,9 @@ function PaymentAction({
     );
   }
 
+  // Une demande annulée n'est pas payable.
+  if (demande.statut === "Annulé") return null;
+
   const priceCents = getServicePriceCents(demande.service);
   if (priceCents === null) {
     return (
@@ -455,24 +521,12 @@ function PaymentAction({
     );
   }
 
+  // Le paiement se fait via le bandeau « À régler » en haut de la page :
+  // ici on indique juste qu'un règlement est attendu.
   return (
-    <button
-      type="button"
-      onClick={onPay}
-      disabled={paying}
-      className="inline-flex items-center gap-1.5 bg-french-blue hover:bg-[#000066] disabled:opacity-60 text-white px-4 py-2 rounded-lg text-[13px] font-bold transition-all active:scale-[0.99] whitespace-nowrap"
-    >
-      {paying ? (
-        "Redirection…"
-      ) : (
-        <>
-          <span className="material-symbols-outlined text-[16px]">
-            credit_card
-          </span>
-          Payer {formatPriceCents(priceCents)}
-        </>
-      )}
-    </button>
+    <span className="inline-flex items-center gap-1 text-[12px] font-bold rounded-full px-3 py-1.5 border bg-[#fff7e6] text-[#a25a00] border-[#ffd591]">
+      À régler · {formatPriceCents(priceCents)}
+    </span>
   );
 }
 

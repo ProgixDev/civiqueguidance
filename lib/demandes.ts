@@ -93,10 +93,14 @@ export async function saveDemande(input: {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // INSERT seul — pas de .select() chaîné car la policy SELECT est réservée
-  // aux utilisateurs authentifiés (admin). Un visiteur anon peut insérer mais
-  // pas relire la ligne qu'il vient d'insérer.
+  // On génère l'id côté client pour le connaître sans relire la ligne : la
+  // policy SELECT est réservée aux admins, donc un visiteur anon ne peut pas
+  // relire ce qu'il vient d'insérer. Cet id permet de lier le paiement Stripe
+  // à la demande (paiement immédiat depuis le formulaire).
+  const id = crypto.randomUUID();
+
   const { error } = await supabase.from("demandes").insert({
+    id,
     name: input.name,
     email: input.email,
     phone: input.phone,
@@ -130,9 +134,9 @@ export async function saveDemande(input: {
     }),
   }).catch((e) => console.warn("[demandes] notify email failed:", e));
 
-  // On retourne un stub puisqu'on n'a pas l'id/created_at retournés
+  // created_at n'est pas relisible (policy SELECT admin) — on l'approxime.
   return {
-    id: "pending",
+    id,
     createdAt: new Date().toISOString(),
     name: input.name,
     email: input.email,

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import BrushUnderline from "@/app/components/BrushUnderline";
+import { getServicePriceCents, formatPriceCents } from "@/lib/demandes";
 import { services } from "./data";
 
 export function generateStaticParams() {
@@ -32,6 +33,8 @@ export default async function ServicePage({
   const { slug } = await params;
   const service = services[slug];
   if (!service) notFound();
+
+  const priceCents = getServicePriceCents(slug);
 
   return (
     <>
@@ -176,21 +179,43 @@ export default async function ServicePage({
             </div>
           </section>
 
-          {/* CTA */}
+          {/* CTA + tarif bien en évidence */}
           <section className="bg-white border border-ink-black/[0.08] rounded-2xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
             <div>
               <h2 className="text-xl sm:text-2xl font-black tracking-tight text-ink-black mb-2">
                 Demander ce service
               </h2>
-              <p className="text-[15px] text-on-surface-variant">
+              <p className="text-[15px] text-on-surface-variant mb-4">
                 Premier rendez-vous d&apos;analyse gratuit et confidentiel.
               </p>
+              {priceCents !== null ? (
+                <div className="flex items-baseline gap-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">
+                    Tarif
+                  </span>
+                  <span className="text-3xl sm:text-4xl font-black text-french-blue">
+                    {formatPriceCents(priceCents)}
+                  </span>
+                  <span className="text-[13px] font-semibold text-on-surface-variant">
+                    réglé en ligne lors de la demande
+                  </span>
+                </div>
+              ) : (
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl sm:text-3xl font-black text-french-blue">
+                    Sur devis
+                  </span>
+                  <span className="text-[13px] font-semibold text-on-surface-variant">
+                    tarif communiqué après analyse
+                  </span>
+                </div>
+              )}
             </div>
             <Link
               href={`/demande?service=${slug}`}
-              className="inline-flex items-center justify-center bg-french-blue hover:bg-[#000066] text-white px-7 py-4 rounded-xl text-[14px] font-bold tracking-wide shadow-md transition-all whitespace-nowrap"
+              className="inline-flex items-center justify-center bg-french-blue hover:bg-[#000066] text-white px-7 py-4 rounded-xl text-[15px] font-bold tracking-wide shadow-md transition-all whitespace-nowrap"
             >
-              Demander ce service
+              {priceCents !== null ? "Demander & payer" : "Demander un devis"}
               <span
                 className="material-symbols-outlined text-[16px] ml-2"
                 style={{ fontVariationSettings: "'wght' 300" }}

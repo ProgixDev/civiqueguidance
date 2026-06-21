@@ -79,8 +79,13 @@ export async function POST(req: Request) {
         demande_id: body.demandeId ?? "",
         client_id: clientId,
       },
-      success_url: `${siteUrl}/compte?payment=success`,
-      cancel_url: `${siteUrl}/compte?payment=cancel`,
+      // Client connecté → espace client ; visiteur anonyme → page publique.
+      success_url: clientId
+        ? `${siteUrl}/compte?payment=success`
+        : `${siteUrl}/merci?payment=success`,
+      cancel_url: clientId
+        ? `${siteUrl}/compte?payment=cancel`
+        : `${siteUrl}/merci?payment=cancel`,
     });
 
     return NextResponse.json({ ok: true, url: session.url, id: session.id });
