@@ -5,13 +5,21 @@ import { useEffect, useRef, useState } from "react";
 type Props = {
   onSave: (dataUrl: string) => Promise<void> | void;
   documentLabel?: string;
+  /** Bloque le bouton « Valider » (ex. tant que les consentements ne sont pas cochés). */
+  disabled?: boolean;
+  disabledHint?: string;
 };
 
 /**
  * Click-to-sign : un canvas où le client dessine sa signature à la souris/au doigt.
  * Stockée en data:image/png;base64 (envoyée à Supabase via onSave).
  */
-export default function SignaturePad({ onSave, documentLabel }: Props) {
+export default function SignaturePad({
+  onSave,
+  documentLabel,
+  disabled = false,
+  disabledHint,
+}: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawing = useRef(false);
   const lastPoint = useRef<{ x: number; y: number } | null>(null);
@@ -83,12 +91,18 @@ export default function SignaturePad({ onSave, documentLabel }: Props) {
 
   async function save() {
     const canvas = canvasRef.current;
-    if (!canvas || isEmpty) return;
+    if (!canvas || isEmpty || disabled) return;
     setSaving(true);
-    const dataUrl = canvas.toDataURL("image/png");
-    await onSave(dataUrl);
-    setSaved(true);
-    setSaving(false);
+    try {
+      const dataUrl = canvas.toDataURL("image/png");
+      await onSave(dataUrl);
+      setSaved(true);
+    } catch {
+      // onSave a échoué (ex. erreur réseau/serveur) : on laisse réessayer.
+      // Le parent affiche le message d'erreur.
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -131,11 +145,17 @@ export default function SignaturePad({ onSave, documentLabel }: Props) {
       <button
         type="button"
         onClick={save}
-        disabled={isEmpty || saving || saved}
+        disabled={isEmpty || saving || saved || disabled}
         className="mt-4 w-full bg-french-blue hover:bg-[#000066] disabled:opacity-50 text-white py-3 rounded-xl text-[14px] font-bold tracking-wide shadow-md transition-all"
       >
         {saving ? "Enregistrement…" : saved ? "✓ Signature enregistrée" : "Valider la signature"}
       </button>
+
+      {disabled && disabledHint && (
+        <p className="text-[11px] text-marianne-red mt-2 text-center">
+          {disabledHint}
+        </p>
+      )}
     </div>
   );
 }

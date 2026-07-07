@@ -26,11 +26,20 @@ function getTransporter() {
   });
 }
 
+export type EmailAttachment = {
+  filename: string;
+  content: string; // contenu encodé (ex. base64)
+  encoding?: string; // ex. "base64"
+  cid?: string; // pour référencer l'image inline via src="cid:..."
+};
+
 export type SendEmailParams = {
   to: string;
   subject: string;
   html: string;
   replyTo?: string;
+  bcc?: string;
+  attachments?: EmailAttachment[];
 };
 
 export async function sendEmail(
@@ -41,9 +50,11 @@ export async function sendEmail(
     await transporter.sendMail({
       from: `"DémarchesCivique" <${process.env.GMAIL_USER}>`,
       to: params.to,
+      bcc: params.bcc,
       subject: params.subject,
       html: params.html,
       replyTo: params.replyTo,
+      attachments: params.attachments,
     });
     return { ok: true };
   } catch (e) {
@@ -172,6 +183,66 @@ export function receiptTemplate(p: {
       </table>
       ${p.receiptUrl ? `<p style="margin:24px 0 0;font-size:14px;"><a href="${p.receiptUrl}" style="color:${FRENCH_BLUE};font-weight:700;">Télécharger le reçu Stripe officiel →</a></p>` : ""}
       <p style="margin:24px 0 0;font-size:13px;color:#6b6b78;">Conservez ce reçu pour votre comptabilité.</p>
+    `),
+  };
+}
+
+/**
+ * Copie du contrat signé envoyée au client (et en copie à l'admin) après une
+ * signature électronique. L'image de la signature est jointe avec le cid
+ * "signature" et affichée inline.
+ */
+export function signedContractTemplate(d: {
+  signerName: string;
+  contractRef: string;
+  signedAt: Date;
+  ip: string;
+  consents: {
+    contract: boolean;
+    cgv: boolean;
+    privacy: boolean;
+    withdrawal: boolean;
+  };
+}): { subject: string; html: string } {
+  const dateFr = d.signedAt.toLocaleDateString("fr-FR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  const timeFr = d.signedAt.toLocaleTimeString("fr-FR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const check = (ok: boolean) =>
+    ok
+      ? `<span style="color:#1e7a3a;font-weight:700;">✓ accepté</span>`
+      : `<span style="color:${MARIANNE_RED};font-weight:700;">✕ non accepté</span>`;
+
+  return {
+    subject: `Votre contrat signé — ${d.contractRef}`,
+    html: shell(`
+      <h1 style="margin:0 0 8px;font-size:22px;font-weight:800;color:#161616;">Contrat signé ✍️</h1>
+      <p style="margin:0 0 24px;font-size:15px;color:#454653;line-height:1.6;">Bonjour ${escapeHtml(d.signerName)}, voici la copie de votre contrat signé électroniquement. Conservez cet email : il fait office de preuve.</p>
+      <table cellpadding="12" cellspacing="0" style="width:100%;border:1px solid #eaeaef;border-radius:12px;font-size:14px;">
+        <tr><td style="color:#6b6b78;width:150px;">Document</td><td style="font-weight:600;">${escapeHtml(d.contractRef)}</td></tr>
+        <tr><td style="color:#6b6b78;">Signataire</td><td style="font-weight:600;">${escapeHtml(d.signerName)}</td></tr>
+        <tr><td style="color:#6b6b78;">Horodatage</td><td style="font-weight:600;">${dateFr} à ${timeFr}</td></tr>
+        <tr><td style="color:#6b6b78;">Adresse IP</td><td style="font-weight:600;">${escapeHtml(d.ip || "non disponible")}</td></tr>
+      </table>
+      <div style="margin-top:20px;background:#fafafc;border-radius:12px;padding:16px;border-left:3px solid ${FRENCH_BLUE};">
+        <div style="color:#6b6b78;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:10px;">Consentements recueillis</div>
+        <div style="font-size:14px;color:#161616;line-height:1.9;">
+          Acceptation du contrat : ${check(d.consents.contract)}<br>
+          Acceptation des CGV : ${check(d.consents.cgv)}<br>
+          Acceptation de la politique de confidentialité : ${check(d.consents.privacy)}<br>
+          Renonciation au droit de rétractation (démarrage immédiat) : ${check(d.consents.withdrawal)}
+        </div>
+      </div>
+      <div style="margin-top:20px;">
+        <div style="color:#6b6b78;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:10px;">Signature</div>
+        <img src="cid:signature" alt="Signature" style="max-width:280px;border:1px solid #eaeaef;border-radius:8px;background:#fff;">
+      </div>
+      <p style="margin:24px 0 0;font-size:12px;color:#6b6b78;line-height:1.6;">Cette signature électronique a la même valeur légale qu'une signature manuscrite (article 1367 du Code civil et règlement eIDAS). Le contrat signé est conservé de manière sécurisée pendant une durée minimale de 5 ans.</p>
     `),
   };
 }

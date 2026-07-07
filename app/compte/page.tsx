@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ClientShell from "./ClientShell";
-import SignaturePad from "@/app/components/SignaturePad";
+import ContractSignature from "@/app/components/ContractSignature";
 import {
   loadMyDemandes,
   loadMyDocuments,
@@ -12,7 +12,6 @@ import {
   uploadDocument,
   deleteDocument,
   getDocumentDownloadUrl,
-  saveSignature,
   type ClientDocument,
   type ClientSignature,
 } from "@/lib/client-data";
@@ -63,10 +62,11 @@ function ClientContent({ userEmail }: { userEmail: string }) {
   // puis nettoie l'URL. Lu via window pour éviter une Suspense boundary.
   useEffect(() => {
     const p = new URLSearchParams(window.location.search).get("payment");
-    if (p === "success" || p === "cancel") {
-      setPayNotice(p);
-      window.history.replaceState({}, "", "/compte");
-    }
+    if (p !== "success" && p !== "cancel") return;
+    window.history.replaceState({}, "", "/compte");
+    // Différé (hors du corps synchrone de l'effet) pour éviter une cascade de rendus.
+    const raf = requestAnimationFrame(() => setPayNotice(p));
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   async function refresh() {
@@ -104,7 +104,7 @@ function ClientContent({ userEmail }: { userEmail: string }) {
         setPayingId(null);
         return;
       }
-      window.location.href = data.url; // redirection vers Stripe Checkout
+      window.location.assign(data.url); // redirection vers Stripe Checkout
     } catch {
       setPayError("Le paiement n'a pas pu démarrer. Réessayez.");
       setPayingId(null);
@@ -135,11 +135,6 @@ function ClientContent({ userEmail }: { userEmail: string }) {
   async function onDownloadDoc(doc: ClientDocument) {
     const url = await getDocumentDownloadUrl(doc.storagePath);
     if (url) window.open(url, "_blank");
-  }
-
-  async function onSaveSignature(dataUrl: string) {
-    const ok = await saveSignature(dataUrl, "Mandat d'accompagnement");
-    if (ok) await refresh();
   }
 
   // Demandes encore à régler (tarif fixe, non payées, non annulées).
@@ -403,15 +398,19 @@ function ClientContent({ userEmail }: { userEmail: string }) {
 
       {/* Signature électronique */}
       <section>
-        <h2 className="text-[20px] font-bold text-ink-black mb-4">
-          Signature électronique
+        <h2 className="text-[20px] font-bold text-ink-black mb-1">
+          Signature du contrat
         </h2>
+        <p className="text-[13px] text-on-surface-variant mb-4">
+          Signature électronique à valeur légale (art. 1367 du Code civil,
+          règlement eIDAS). Horodatée et archivée comme preuve.
+        </p>
 
-        {/* Signatures déjà enregistrées */}
+        {/* Contrats déjà signés */}
         {signatures.length > 0 && (
           <div className="mb-5 space-y-3">
             <p className="text-[12px] font-bold uppercase tracking-wider text-on-surface-variant">
-              Signatures enregistrées ({signatures.length})
+              Contrats signés ({signatures.length})
             </p>
             {signatures.map((sig) => (
               <article
@@ -455,15 +454,15 @@ function ClientContent({ userEmail }: { userEmail: string }) {
           </div>
         )}
 
-        {/* Pad pour ajouter une nouvelle signature */}
-        <SignaturePad
-          onSave={onSaveSignature}
-          documentLabel={
-            signatures.length > 0
-              ? "Nouvelle signature"
-              : "Mandat d'accompagnement administratif"
-          }
-        />
+        {/* Flux de signature du contrat (tant qu'aucun contrat n'est signé) */}
+        {signatures.length === 0 && (
+          <ContractSignature
+            signerName={userEmail}
+            demandeId={demandes[0]?.id}
+            serviceLabel={demandes[0]?.serviceLabel}
+            onSigned={refresh}
+          />
+        )}
       </section>
     </div>
   );

@@ -79,7 +79,7 @@ export default function DemandeForm() {
         });
         const data = await res.json();
         if (data.ok && data.url) {
-          window.location.href = data.url; // redirection vers Stripe
+          window.location.assign(data.url); // redirection vers Stripe
           return;
         }
       } catch {
