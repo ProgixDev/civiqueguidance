@@ -29,12 +29,12 @@ export default function Hero() {
               professionnelle. Un accompagnement humain et transparent.
             </p>
 
-            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/demande"
+                href="/services"
                 className="inline-flex items-center justify-center gap-2 bg-french-blue text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-[15px] sm:text-[16px] font-bold hover:opacity-95 transition-all shadow-sm"
               >
-                Démarrer ma procédure
+                Découvrir nos services
                 <span
                   className="material-symbols-outlined text-[18px]"
                   style={{ fontVariationSettings: "'wght' 400" }}
@@ -53,12 +53,6 @@ export default function Hero() {
                   calendar_month
                 </span>
                 Prendre rendez-vous
-              </Link>
-              <Link
-                href="/services"
-                className="inline-flex items-center justify-center border-2 border-french-blue text-french-blue px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-[15px] sm:text-[16px] font-bold hover:bg-french-blue hover:text-white transition-all"
-              >
-                Découvrir nos services
               </Link>
             </div>
           </div>

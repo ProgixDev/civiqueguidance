@@ -47,8 +47,20 @@ function formatDateLong(d: Date) {
   return `${DAYS_FR[(d.getDay() + 6) % 7]} ${d.getDate()} ${MONTHS_FR[d.getMonth()].toLowerCase()}`;
 }
 
+/** Date+heure de début d'un créneau (ex. "14:00") pour un jour donné. */
+function slotStart(date: Date, slot: string): Date {
+  const [h, m] = slot.split(":").map(Number);
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate(), h, m, 0, 0);
+}
+
+/** Vrai s'il reste au moins un créneau à venir ce jour-là (par rapport à maintenant). */
+function dayHasFutureSlot(date: Date, now: Date): boolean {
+  return TIME_SLOTS.some((slot) => slotStart(date, slot) > now);
+}
+
 export default function BookingCalendar() {
-  const today = useMemo(() => startOfDay(new Date()), []);
+  const now = useMemo(() => new Date(), []);
+  const today = useMemo(() => startOfDay(now), [now]);
   const [viewMonth, setViewMonth] = useState(
     () => new Date(today.getFullYear(), today.getMonth(), 1)
   );
@@ -72,7 +84,8 @@ export default function BookingCalendar() {
 
   function selectDate(d: Date) {
     if (d.getDay() === 0) return; // dimanche fermé
-    if (d < today) return; // passé
+    if (d < today) return; // jour passé
+    if (!dayHasFutureSlot(d, now)) return; // aujourd'hui mais plus aucun créneau
     setSelectedDate(d);
     setSelectedSlot(null);
   }
@@ -154,7 +167,9 @@ export default function BookingCalendar() {
                   const isToday = d.getTime() === today.getTime();
                   const isSelected =
                     selectedDate && d.getTime() === selectedDate.getTime();
-                  const disabled = isPast || isSunday;
+                  // Aujourd'hui devient indisponible s'il ne reste aucun créneau à venir.
+                  const noSlotsLeft = !isPast && !isSunday && !dayHasFutureSlot(d, now);
+                  const disabled = isPast || isSunday || noSlotsLeft;
 
                   return (
                     <button
@@ -213,7 +228,10 @@ export default function BookingCalendar() {
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-2.5">
                 {TIME_SLOTS.map((slot) => {
                   const isSelected = selectedSlot === slot;
-                  const disabled = !selectedDate;
+                  const isPastSlot = selectedDate
+                    ? slotStart(selectedDate, slot) <= now
+                    : false;
+                  const disabled = !selectedDate || isPastSlot;
                   return (
                     <button
                       key={slot}
