@@ -56,6 +56,15 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
+            href="/#rendez-vous"
+            className="inline-flex items-center gap-2 border-2 border-french-blue text-french-blue px-5 py-2.5 rounded-lg text-[14px] font-bold hover:bg-french-blue hover:text-white transition-all"
+          >
+            <span className="material-symbols-outlined text-[18px]">
+              calendar_month
+            </span>
+            Prendre rendez-vous
+          </Link>
+          <Link
             href="/demande"
             className="bg-french-blue text-white px-6 py-3 rounded-lg text-[14px] font-bold hover:opacity-90 transition-opacity active:scale-[0.98]"
           >
@@ -86,6 +95,16 @@ export default function Navbar() {
               {l.label}
             </Link>
           ))}
+          <Link
+            href="/#rendez-vous"
+            onClick={() => setOpen(false)}
+            className="inline-flex items-center justify-center gap-2 border-2 border-french-blue text-french-blue px-6 py-3 rounded-lg text-[14px] font-bold text-center"
+          >
+            <span className="material-symbols-outlined text-[18px]">
+              calendar_month
+            </span>
+            Prendre rendez-vous
+          </Link>
           <Link
             href="/demande"
             onClick={() => setOpen(false)}
