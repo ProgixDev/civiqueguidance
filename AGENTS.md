@@ -78,3 +78,5 @@ DémarchesCivique is an in-production web app that helps foreigners in France na
 Stop after **two failed attempts** at the same fix and ask one concrete question instead of forcing a hack. If a doc conflicts with the code, the doc may be stale — flag it and propose the doc fix in the same PR.
 <!-- END:ai-operating-manual -->
 ...
+
+
