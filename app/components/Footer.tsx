@@ -52,13 +52,13 @@ export default function Footer() {
           <div className="flex items-center gap-3 mb-6">
             <Image
               src="/logo.png"
-              alt="DémarchesCivique"
+              alt="Démarches Civique"
               width={48}
               height={48}
               className="h-12 w-12 object-contain"
             />
             <span className="text-[18px] font-black tracking-tight text-white">
-              DémarchesCivique
+              Démarches Civique
             </span>
           </div>
 
@@ -148,7 +148,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[12px] text-white/50">
           <p className="flex items-center gap-3 flex-wrap justify-center">
             <span>
-              © {new Date().getFullYear()} DémarchesCivique. Tous droits
+              © {new Date().getFullYear()} Démarches Civique. Tous droits
               réservés.
             </span>
             <span className="hidden md:inline opacity-30">·</span>

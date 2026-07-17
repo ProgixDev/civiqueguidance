@@ -3,7 +3,7 @@ import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 
 export const metadata = {
-  title: "Merci | DémarchesCivique",
+  title: "Merci | Démarches Civique",
   robots: { index: false },
 };
 

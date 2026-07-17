@@ -48,7 +48,7 @@ export async function sendEmail(
   try {
     const transporter = getTransporter();
     await transporter.sendMail({
-      from: `"DémarchesCivique" <${process.env.GMAIL_USER}>`,
+      from: `"Démarches Civique" <${process.env.GMAIL_USER}>`,
       to: params.to,
       bcc: params.bcc,
       subject: params.subject,
@@ -80,14 +80,14 @@ function shell(content: string): string {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DémarchesCivique</title>
+<title>Démarches Civique</title>
 </head>
 <body style="margin:0;padding:0;background:#f6f6fa;font-family:Arial,Helvetica,sans-serif;color:#161616;">
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f6f6fa;padding:32px 16px;">
 <tr><td align="center">
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.04);">
   <tr><td style="background:${FRENCH_BLUE};padding:24px 32px;">
-    <div style="color:#ffffff;font-size:20px;font-weight:800;letter-spacing:-0.02em;">DémarchesCivique</div>
+    <div style="color:#ffffff;font-size:20px;font-weight:800;letter-spacing:-0.02em;">Démarches Civique</div>
     <div style="color:rgba(255,255,255,0.7);font-size:12px;margin-top:4px;">Accompagnement administratif</div>
   </td></tr>
   <tr><td style="padding:32px;">
@@ -95,7 +95,7 @@ ${content}
   </td></tr>
   <tr><td style="background:#fafafc;padding:20px 32px;border-top:1px solid #eaeaef;color:#6b6b78;font-size:12px;">
     <div style="margin-bottom:6px;">
-      <strong style="color:#161616;">DémarchesCivique</strong> · service.horizon224@gmail.com · +33 7 51 25 23 09
+      <strong style="color:#161616;">Démarches Civique</strong> · service.horizon224@gmail.com · +33 7 51 25 23 09
     </div>
     <div>Accompagnement administratif — pas un cabinet juridique. <span style="color:${MARIANNE_RED};">●</span></div>
   </td></tr>
@@ -143,12 +143,12 @@ export function clientConfirmationTemplate(d: {
   serviceLabel: string;
 }): { subject: string; html: string } {
   return {
-    subject: `Votre demande est bien reçue — DémarchesCivique`,
+    subject: `Votre demande est bien reçue — Démarches Civique`,
     html: shell(`
       <h1 style="margin:0 0 16px;font-size:22px;font-weight:800;color:#161616;">Bonjour ${escapeHtml(d.name)},</h1>
       <p style="margin:0 0 16px;font-size:15px;color:#454653;line-height:1.6;">Nous avons bien reçu votre demande pour le service <strong>${escapeHtml(d.serviceLabel)}</strong>.</p>
       <p style="margin:0 0 24px;font-size:15px;color:#454653;line-height:1.6;">Un conseiller revient vers vous sous <strong>24 heures ouvrées</strong> avec une proposition d'accompagnement adaptée à votre situation.</p>
-      <p style="margin:0;font-size:14px;color:#6b6b78;">À très bientôt,<br>L'équipe DémarchesCivique</p>
+      <p style="margin:0;font-size:14px;color:#6b6b78;">À très bientôt,<br>L'équipe Démarches Civique</p>
     `),
   };
 }
@@ -172,7 +172,7 @@ export function receiptTemplate(p: {
     year: "numeric",
   });
   return {
-    subject: `Reçu de paiement — ${amount} — DémarchesCivique`,
+    subject: `Reçu de paiement — ${amount} — Démarches Civique`,
     html: shell(`
       <h1 style="margin:0 0 8px;font-size:22px;font-weight:800;color:#161616;">Merci ${escapeHtml(p.customerName)} 🙏</h1>
       <p style="margin:0 0 24px;font-size:15px;color:#454653;line-height:1.6;">Votre paiement a bien été enregistré. Voici votre reçu officiel.</p>

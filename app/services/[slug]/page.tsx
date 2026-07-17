@@ -18,9 +18,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const service = services[slug];
-  if (!service) return { title: "Service introuvable | DémarchesCivique" };
+  if (!service) return { title: "Service introuvable | Démarches Civique" };
   return {
-    title: `${service.title} | DémarchesCivique`,
+    title: `${service.title} | Démarches Civique`,
     description: service.intro,
   };
 }
@@ -142,7 +142,7 @@ export default async function ServicePage({
               <div className="flex items-center gap-3 mb-4">
                 <span className="material-symbols-outlined">verified_user</span>
                 <h2 className="text-xl sm:text-2xl font-bold">
-                  Transparence DémarchesCivique
+                  Transparence Démarches Civique
                 </h2>
               </div>
               <p className="text-[15px] sm:text-[16px] leading-relaxed text-white/90 max-w-3xl">

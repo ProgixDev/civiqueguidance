@@ -4,19 +4,19 @@ import Footer from "@/app/components/Footer";
 import BrushUnderline from "@/app/components/BrushUnderline";
 
 export const metadata = {
-  title: "Conditions d'utilisation | DémarchesCivique",
+  title: "Conditions d'utilisation | Démarches Civique",
   description:
-    "Conditions d'utilisation du site DémarchesCivique. Service privé d'accompagnement administratif.",
+    "Conditions d'utilisation du site Démarches Civique. Service privé d'accompagnement administratif.",
 };
 
 const sections = [
   {
     title: "1. Objet",
-    body: `Les présentes conditions régissent l'utilisation du site DémarchesCivique et des services d'accompagnement administratif proposés. En accédant au site ou en utilisant un service, vous acceptez sans réserve l'intégralité de ces conditions.`,
+    body: `Les présentes conditions régissent l'utilisation du site Démarches Civique et des services d'accompagnement administratif proposés. En accédant au site ou en utilisant un service, vous acceptez sans réserve l'intégralité de ces conditions.`,
   },
   {
     title: "2. Nature du service",
-    body: `DémarchesCivique est un service privé et indépendant d'accompagnement administratif. Nous ne sommes pas un cabinet juridique. Nous ne donnons pas de conseils juridiques, ne représentons pas nos clients devant les administrations et ne modifions jamais leurs documents personnels. Nous vous accompagnons et vous guidons, mais vous restez maître de vos démarches.`,
+    body: `Démarches Civique est un service privé et indépendant d'accompagnement administratif. Nous ne sommes pas un cabinet juridique. Nous ne donnons pas de conseils juridiques, ne représentons pas nos clients devant les administrations et ne modifions jamais leurs documents personnels. Nous vous accompagnons et vous guidons, mais vous restez maître de vos démarches.`,
   },
   {
     title: "3. Acceptation",
@@ -36,7 +36,7 @@ const sections = [
   },
   {
     title: "7. Limitation de responsabilité",
-    body: `DémarchesCivique met en œuvre tous les moyens raisonnables pour fournir un accompagnement de qualité. Cependant, nous ne pouvons garantir l'issue favorable d'une démarche administrative — celle-ci dépend exclusivement de la décision des autorités compétentes (OFPRA, CNDA, préfectures, OFII, etc.). Notre responsabilité ne peut être engagée pour des refus ou retards de l'administration.`,
+    body: `Démarches Civique met en œuvre tous les moyens raisonnables pour fournir un accompagnement de qualité. Cependant, nous ne pouvons garantir l'issue favorable d'une démarche administrative — celle-ci dépend exclusivement de la décision des autorités compétentes (OFPRA, CNDA, préfectures, OFII, etc.). Notre responsabilité ne peut être engagée pour des refus ou retards de l'administration.`,
   },
   {
     title: "8. Propriété intellectuelle",
@@ -79,7 +79,7 @@ export default function ConditionsUtilisationPage() {
               </span>
             </h1>
             <p className="text-[16px] sm:text-[18px] leading-relaxed text-on-surface-variant mt-6">
-              Règles d&apos;utilisation du site DémarchesCivique et de nos
+              Règles d&apos;utilisation du site Démarches Civique et de nos
               services d&apos;accompagnement administratif.
             </p>
           </header>
