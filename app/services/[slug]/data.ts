@@ -12,7 +12,7 @@ export type ServiceDetail = {
 };
 
 const TRANSPARENCE_BASE =
-  "Démarches Civique ne modifie pas vos documents et n'écrit jamais à votre place.";
+  "DÉMARCHES CIVIQUES ne modifie pas vos documents et n'écrit jamais à votre place.";
 
 export const services: Record<string, ServiceDetail> = {
   "demandeurs-asile": {
@@ -213,7 +213,7 @@ export const services: Record<string, ServiceDetail> = {
     ],
     ceQueNousNeFaisonsPas: [],
     transparenceText:
-      "Démarches Civique vous accompagne dans la recherche et la constitution de dossier. Nous ne garantissons pas l'attribution d'un logement, mais nous maximisons vos chances avec un dossier irréprochable.",
+      "DÉMARCHES CIVIQUES vous accompagne dans la recherche et la constitution de dossier. Nous ne garantissons pas l'attribution d'un logement, mais nous maximisons vos chances avec un dossier irréprochable.",
     documents: [
       "Pièce d'identité ou titre de séjour",
       "3 derniers bulletins de salaire ou attestation de bourse",
@@ -281,7 +281,7 @@ export const services: Record<string, ServiceDetail> = {
     ],
     ceQueNousNeFaisonsPas: [],
     transparenceText:
-      "Démarches Civique vous accompagne dans la structuration et la mise en forme de votre CV et de votre lettre de motivation. Vous restez l'auteur de votre candidature : nous vous conseillons et vous guidons à chaque étape.",
+      "DÉMARCHES CIVIQUES vous accompagne dans la structuration et la mise en forme de votre CV et de votre lettre de motivation. Vous restez l'auteur de votre candidature : nous vous conseillons et vous guidons à chaque étape.",
     documents: [
       "CV actuel (si existant)",
       "Liste de vos expériences professionnelles",

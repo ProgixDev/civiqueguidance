@@ -27,7 +27,7 @@ The system as it actually is today. Honest, not aspirational.
 
 ## Pages (routes)
 
-- Public: `/`, `/services`, `/services/[slug]`, `/demande`, `/a-propos`, `/conditions-utilisation`
+- Public: `/`, `/services`, `/services/[slug]`, `/demande`, `/a-propos`, `/mentions-legales`, `/conditions-generales-vente`, `/politique-confidentialite`, `/politique-cookies`
 - Client area (auth): `/compte`, `/compte/connexion`, `/compte/inscription`
 - Admin (auth): `/admin/login`, `/dashboard`
 - API: `POST /api/demande-notify`, `POST /api/stripe/checkout`, `POST /api/stripe/webhook`

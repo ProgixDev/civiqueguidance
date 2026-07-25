@@ -1,9 +1,9 @@
 import LegalDoc, { LegalSection } from "@/app/components/LegalDoc";
 
 export const metadata = {
-  title: "Politique de cookies | Démarches Civique",
+  title: "Politique de cookies | DÉMARCHES CIVIQUES",
   description:
-    "Politique de cookies de Démarches Civique : types de cookies, gestion du consentement, durée de conservation et paramétrage.",
+    "Politique de cookies de DÉMARCHES CIVIQUES : types de cookies, gestion du consentement, durée de conservation et paramétrage.",
 };
 
 const sections: LegalSection[] = [
@@ -68,7 +68,7 @@ export default function PolitiqueCookies() {
   return (
     <LegalDoc
       title="Politique de cookies"
-      intro="Types de cookies utilisés sur Démarches Civique, gestion de votre consentement et paramétrage."
+      intro="Types de cookies utilisés sur DÉMARCHES CIVIQUES, gestion de votre consentement et paramétrage."
       sections={sections}
       updated="26 juin 2026"
     />

@@ -56,7 +56,7 @@ export default function CookieBanner() {
         Nous utilisons uniquement des cookies essentiels au fonctionnement
         (session, préférences). Aucun traceur publicitaire.{" "}
         <Link
-          href="/conditions-utilisation"
+          href="/politique-cookies"
           className="text-french-blue underline underline-offset-2 font-semibold hover:no-underline whitespace-nowrap"
         >
           En savoir plus

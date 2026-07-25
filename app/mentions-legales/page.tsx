@@ -1,9 +1,9 @@
 import LegalDoc, { LegalSection } from "@/app/components/LegalDoc";
 
 export const metadata = {
-  title: "Mentions légales | Démarches Civique",
+  title: "Mentions légales | DÉMARCHES CIVIQUES",
   description:
-    "Mentions légales du site Démarches Civique : éditeur, hébergeur, propriété intellectuelle et responsabilité.",
+    "Mentions légales du site DÉMARCHES CIVIQUES : éditeur, hébergeur, propriété intellectuelle et responsabilité.",
 };
 
 const sections: LegalSection[] = [

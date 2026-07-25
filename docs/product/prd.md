@@ -15,7 +15,7 @@ Foreigners in France face complex, high-stakes administrative procedures (asylum
 
 ## Non-goals (confirmed by product owner)
 
-- **Not a law firm / no legal advice** — no legal counsel, no representation before administrations, no writing or altering the client's documents. _Observed:_ `ceQueNousNeFaisonsPas` arrays in `data.ts`, `app/conditions-utilisation/page.tsx`, `app/a-propos/page.tsx`.
+- **Not a law firm / no legal advice** — no legal counsel, no representation before administrations, no writing or altering the client's documents. _Observed:_ `ceQueNousNeFaisonsPas` arrays in `data.ts`, `app/conditions-generales-vente/page.tsx` (article 2), `app/a-propos/page.tsx`.
 - **No guarantee of outcome** — never guarantees a permit, visa, status, or nationality. _Observed:_ same sources.
 - **No market outside France** — France only (Canada was removed 2026-06-10). _Observed:_ `app/services/[slug]/data.ts`, `CoverageSection.tsx`.
 - **No AI/automated file generation** — accompaniment stays human; the client remains the author of their file.
@@ -41,7 +41,7 @@ Foreigners in France face complex, high-stakes administrative procedures (asylum
 - France-only scope; French-language product. _Observed:_ copy + `html lang="fr"`.
 - Must work even when backend integrations (Supabase/Stripe/email) are unconfigured (graceful no-op). _Observed:_ `middleware.ts`, `lib/stripe.ts`, `lib/email.ts`.
 - Per-user data isolation enforced by Supabase RLS. _Observed:_ `supabase/migrations/`.
-- Compliance posture: RGPD references and transparency commitments are part of the product promise. _Observed:_ `TrustFactors.tsx`, `conditions-utilisation`.
+- Compliance posture: RGPD references and transparency commitments are part of the product promise. _Observed:_ `TrustFactors.tsx`, `politique-confidentialite`, `politique-cookies`.
 
 ## Success metrics (confirmed by product owner)
 

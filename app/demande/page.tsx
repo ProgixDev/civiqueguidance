@@ -5,7 +5,7 @@ import BrushUnderline from "@/app/components/BrushUnderline";
 import DemandeForm from "./DemandeForm";
 
 export const metadata = {
-  title: "Demander une prestation | Démarches Civique",
+  title: "Demander une prestation | DÉMARCHES CIVIQUES",
   description:
     "Décrivez votre besoin et nous vous proposerons un accompagnement adapté à votre situation.",
 };

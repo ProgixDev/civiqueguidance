@@ -34,14 +34,14 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-4">
           <Image
             src="/logo.png"
-            alt="Démarches Civique Logo"
+            alt="DÉMARCHES CIVIQUES Logo"
             width={80}
             height={80}
             className="h-16 w-16 sm:h-20 sm:w-20 object-contain"
             priority
           />
           <span className="text-[24px] leading-8 font-bold text-french-blue tracking-tight">
-            Démarches Civique
+            DÉMARCHES CIVIQUES
           </span>
         </Link>
 

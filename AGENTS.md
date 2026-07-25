@@ -47,7 +47,7 @@ DémarchesCivique is an in-production web app that helps foreigners in France na
 
 ## 5. Architecture as it is
 
-- **Routing:** App Router under `app/`. Public pages (`/`, `/services`, `/services/[slug]`, `/demande`, `/a-propos`, `/conditions-utilisation`), client area (`/compte`, `/compte/connexion`, `/compte/inscription`), admin (`/admin/login`, `/dashboard`), and API routes under `app/api/` (`demande-notify`, `stripe/checkout`, `stripe/webhook`).
+- **Routing:** App Router under `app/`. Public pages (`/`, `/services`, `/services/[slug]`, `/demande`, `/a-propos`, and the four legal pages `/mentions-legales`, `/conditions-generales-vente`, `/politique-confidentialite`, `/politique-cookies`), client area (`/compte`, `/compte/connexion`, `/compte/inscription`), admin (`/admin/login`, `/dashboard`), and API routes under `app/api/` (`demande-notify`, `stripe/checkout`, `stripe/webhook`).
 - **UI:** Presentational components in `app/components/` (PascalCase). A small `components/ui/` holds shadcn-style primitives.
 - **Logic / data access:** lives in `lib/` (`demandes.ts`, `admin-data.ts`, `client-data.ts`, `admin-auth.ts`, `client-auth.ts`, `email.ts`, `stripe.ts`, `utils.ts`) and `lib/supabase/` (browser/server clients).
 - **State:** mostly local `useState`/`useEffect` inside client-component pages that call `lib/*-data.ts`. No global store.

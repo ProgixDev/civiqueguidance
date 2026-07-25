@@ -4,9 +4,9 @@ import Footer from "@/app/components/Footer";
 import BrushUnderline from "@/app/components/BrushUnderline";
 
 export const metadata = {
-  title: "À propos | Démarches Civique",
+  title: "À propos | DÉMARCHES CIVIQUES",
   description:
-    "Démarches Civique est un service d'accompagnement administratif privé et indépendant — pas un cabinet juridique.",
+    "DÉMARCHES CIVIQUES est un service d'accompagnement administratif privé et indépendant — pas un cabinet juridique.",
 };
 
 const principes = [
@@ -38,7 +38,7 @@ export default function AProposPage() {
             </span>
             <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-ink-black mb-4">
               <span className="relative inline-block">
-                À propos de Démarches Civique
+                À propos de DÉMARCHES CIVIQUES
                 <BrushUnderline />
               </span>
             </h1>
@@ -70,7 +70,7 @@ export default function AProposPage() {
                   </p>
                 </div>
                 <p className="text-[17px] sm:text-[20px] font-bold leading-relaxed max-w-2xl">
-                  Démarches Civique est un service d&apos;accompagnement
+                  DÉMARCHES CIVIQUES est un service d&apos;accompagnement
                   administratif, <span className="underline decoration-marianne-red decoration-4 underline-offset-4">pas un cabinet juridique</span>.
                 </p>
               </div>

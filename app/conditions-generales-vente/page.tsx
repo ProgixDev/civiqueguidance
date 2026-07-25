@@ -1,9 +1,9 @@
 import LegalDoc, { LegalSection } from "@/app/components/LegalDoc";
 
 export const metadata = {
-  title: "Conditions Générales de Vente | Démarches Civique",
+  title: "Conditions Générales de Vente | DÉMARCHES CIVIQUES",
   description:
-    "CGV de Démarches Civique : objet, services, commande et paiement, rétractation, responsabilité et données personnelles.",
+    "CGV de DÉMARCHES CIVIQUES : objet, services, commande et paiement, rétractation, responsabilité et données personnelles.",
 };
 
 const sections: LegalSection[] = [
@@ -113,7 +113,7 @@ export default function ConditionsGeneralesVente() {
   return (
     <LegalDoc
       title="Conditions Générales de Vente"
-      intro="Conditions dans lesquelles Démarches Civique fournit ses prestations d'accompagnement administratif en ligne."
+      intro="Conditions dans lesquelles DÉMARCHES CIVIQUES fournit ses prestations d'accompagnement administratif en ligne."
       sections={sections}
     />
   );

@@ -5,8 +5,8 @@ import BrushUnderline from "@/app/components/BrushUnderline";
 export type LegalSection = { title: string; body: string };
 
 /**
- * Gabarit commun des pages légales (mentions, CGV, confidentialité, cookies).
- * Reprend le style de la page conditions-utilisation.
+ * Gabarit commun des quatre pages légales : mentions légales, CGV,
+ * politique de confidentialité et politique de cookies.
  */
 export default function LegalDoc({
   title,

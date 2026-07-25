@@ -63,7 +63,7 @@ export default function DashboardShell({
               className="h-9 w-9 object-contain"
             />
             <span className="text-[16px] font-black tracking-tight text-ink-black hidden sm:inline">
-              Démarches Civique
+              DÉMARCHES CIVIQUES
             </span>
           </Link>
 

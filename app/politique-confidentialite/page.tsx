@@ -1,9 +1,9 @@
 import LegalDoc, { LegalSection } from "@/app/components/LegalDoc";
 
 export const metadata = {
-  title: "Politique de confidentialité | Démarches Civique",
+  title: "Politique de confidentialité | DÉMARCHES CIVIQUES",
   description:
-    "Politique de confidentialité de Démarches Civique : collecte, utilisation, conservation et protection de vos données personnelles (RGPD).",
+    "Politique de confidentialité de DÉMARCHES CIVIQUES : collecte, utilisation, conservation et protection de vos données personnelles (RGPD).",
 };
 
 const sections: LegalSection[] = [
@@ -106,7 +106,7 @@ export default function PolitiqueConfidentialite() {
   return (
     <LegalDoc
       title="Politique de confidentialité"
-      intro="Comment Démarches Civique collecte, utilise, conserve et protège vos données personnelles, conformément au RGPD."
+      intro="Comment DÉMARCHES CIVIQUES collecte, utilise, conserve et protège vos données personnelles, conformément au RGPD."
       sections={sections}
     />
   );

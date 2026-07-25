@@ -4,7 +4,7 @@ import SiteBackground from "./components/SiteBackground";
 import CookieBanner from "./components/CookieBanner";
 
 export const metadata: Metadata = {
-  title: "Démarches Civique | Accompagnement Administratif d'Excellence",
+  title: "DÉMARCHES CIVIQUES | Accompagnement Administratif d'Excellence",
   description:
     "Expertise juridique et administrative dédiée à la réussite de votre parcours républicain en France.",
 };

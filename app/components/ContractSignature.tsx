@@ -19,7 +19,7 @@ const CONTRACT_VERSION = "v1";
 const MANDAT_SECTIONS: { title: string; body: string }[] = [
   {
     title: "1. Objet",
-    body: "Le Client confie à Démarches Civique (« le Prestataire ») une mission d'accompagnement administratif : information, aide à la constitution et à la vérification de dossiers, préparation aux démarches. Le Prestataire n'est pas un cabinet juridique, ne donne pas de conseils juridiques et ne représente pas le Client devant les administrations.",
+    body: "Le Client confie à DÉMARCHES CIVIQUES (« le Prestataire ») une mission d'accompagnement administratif : information, aide à la constitution et à la vérification de dossiers, préparation aux démarches. Le Prestataire n'est pas un cabinet juridique, ne donne pas de conseils juridiques et ne représente pas le Client devant les administrations.",
   },
   {
     title: "2. Obligations du Prestataire",
@@ -157,7 +157,7 @@ export default function ContractSignature({
         >
           J&apos;accepte les{" "}
           <Link
-            href="/conditions-utilisation"
+            href="/conditions-generales-vente"
             target="_blank"
             className="text-french-blue font-semibold hover:underline"
           >
@@ -171,7 +171,7 @@ export default function ContractSignature({
         >
           J&apos;accepte la{" "}
           <Link
-            href="/conditions-utilisation"
+            href="/politique-confidentialite"
             target="_blank"
             className="text-french-blue font-semibold hover:underline"
           >

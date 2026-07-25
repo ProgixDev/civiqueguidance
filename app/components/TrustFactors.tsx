@@ -2,6 +2,8 @@
 
 import React from "react";
 import BrushUnderline from "./BrushUnderline";
+// Source unique des libellés de services : la même liste que /services et /demande.
+import { SERVICE_LABELS } from "@/lib/demandes";
 
 const values = [
   {
@@ -119,11 +121,19 @@ function ConsultForm() {
               Nature de votre demande
             </label>
             <div className="relative">
-              <select className="w-full bg-white border border-ink-black/15 rounded-xl py-3 px-4 text-[14.5px] text-ink-black appearance-none focus:border-french-blue focus:ring-1 focus:ring-french-blue focus:outline-none transition-all cursor-pointer">
-                <option>Titre de séjour & Régularisation</option>
-                <option>Procédure d&apos;asile</option>
-                <option>Naturalisation et Nationalité</option>
-                <option>Recours administratif ou contentieux</option>
+              <select
+                name="service"
+                defaultValue=""
+                className="w-full bg-white border border-ink-black/15 rounded-xl py-3 px-4 text-[14.5px] text-ink-black appearance-none focus:border-french-blue focus:ring-1 focus:ring-french-blue focus:outline-none transition-all cursor-pointer"
+              >
+                <option value="" disabled>
+                  Sélectionnez votre démarche
+                </option>
+                {Object.entries(SERVICE_LABELS).map(([value, label]) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
               </select>
               <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-ink-black/40 pointer-events-none" style={{ fontSize: "18px" }}>
                 expand_more
