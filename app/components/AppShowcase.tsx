@@ -87,7 +87,7 @@ export default function AppShowcase() {
                   examen civique
                   <BrushUnderline />
                 </span>{" "}
-                et votre intégration.
+                et votre entretien de naturalisation.
               </h2>
 
               <p className="text-[15px] sm:text-[17px] leading-7 text-white/80 mb-8 max-w-2xl">
