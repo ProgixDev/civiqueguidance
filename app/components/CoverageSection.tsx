@@ -16,7 +16,7 @@ const channels = [
   {
     icon: "mail",
     title: "Email",
-    desc: "service.horizon224@gmail.com",
+    desc: "support@demarchesciviques.fr",
     accent: "marianne-red",
   },
   {
