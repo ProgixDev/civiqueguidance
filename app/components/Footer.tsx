@@ -106,7 +106,7 @@ export default function Footer() {
                 schedule
               </span>
               <span className="text-[14px] text-white/90">
-                Lun – Sam : 9h – 20h
+                Lun – Sam : 9h – 18h
               </span>
             </li>
           </ul>
