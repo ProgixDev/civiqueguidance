@@ -92,7 +92,7 @@ export default function Footer() {
                 mail
               </span>
               <a
-                href="mailto:service.horizon224@gmail.com"
+                href="mailto:support@demarchesciviques.fr"
                 className="text-[14px] text-white/90 hover:text-white transition-colors break-all"
               >
                 support@demarchesciviques.fr
