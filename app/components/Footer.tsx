@@ -95,7 +95,7 @@ export default function Footer() {
                 href="mailto:service.horizon224@gmail.com"
                 className="text-[14px] text-white/90 hover:text-white transition-colors break-all"
               >
-                service.horizon224@gmail.com
+                support@demarchesciviques.fr
               </a>
             </li>
             <li className="flex items-center gap-3">
