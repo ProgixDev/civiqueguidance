@@ -27,6 +27,9 @@ export async function login(
       password,
     });
     if (error) return { ok: false, error: error.message };
+    // L'autorisation (qui a le droit d'entrer dans /dashboard) est décidée par
+    // `middleware.ts`, côté serveur. Ce fichier s'exécute dans le navigateur :
+    // toute règle posée ici serait lisible — et contournable — par le visiteur.
     return { ok: true };
   } catch (e) {
     return {

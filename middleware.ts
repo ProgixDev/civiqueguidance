@@ -36,11 +36,48 @@ export async function middleware(request: NextRequest) {
 
     const path = request.nextUrl.pathname;
 
-    // Protège /dashboard (admin) : si pas connecté → redirige vers /admin/login
-    if (path.startsWith("/dashboard") && !user) {
-      const redirect = request.nextUrl.clone();
-      redirect.pathname = "/admin/login";
-      return NextResponse.redirect(redirect);
+    /**
+     * Détermine si l'utilisateur connecté est administrateur.
+     *
+     * Deux sources acceptées :
+     *  1. `ADMIN_EMAILS` — liste d'e-mails séparés par des virgules, définie
+     *     dans les variables d'environnement Vercel. Variable SERVEUR (pas de
+     *     préfixe NEXT_PUBLIC_) : elle n'est jamais envoyée au navigateur.
+     *  2. `app_metadata.role === "admin"` — pour les comptes promus côté
+     *     Supabase.
+     *
+     * Le rôle est lu dans `app_metadata` et jamais dans `user_metadata` : ce
+     * dernier est modifiable par l'utilisateur via `supabase.auth.updateUser()`,
+     * n'importe quel client pourrait donc s'auto-promouvoir.
+     *
+     * Aucun mot de passe n'apparaît ici : l'authentification reste entièrement
+     * assurée par Supabase, on ne fait qu'autoriser un compte déjà authentifié.
+     */
+    const adminEmails = (process.env.ADMIN_EMAILS ?? "")
+      .split(",")
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean);
+
+    const isAdmin =
+      !!user &&
+      (user.app_metadata?.role === "admin" ||
+        (!!user.email && adminEmails.includes(user.email.toLowerCase())));
+
+    // Protège /dashboard : réservé aux administrateurs.
+    // Le site permet l'inscription libre des clients (/compte/inscription) sur
+    // le même projet Supabase : se contenter de « est connecté » donnerait à
+    // tout client l'accès au back-office.
+    if (path.startsWith("/dashboard")) {
+      if (!user) {
+        const redirect = request.nextUrl.clone();
+        redirect.pathname = "/admin/login";
+        return NextResponse.redirect(redirect);
+      }
+      if (!isAdmin) {
+        const redirect = request.nextUrl.clone();
+        redirect.pathname = "/compte";
+        return NextResponse.redirect(redirect);
+      }
     }
 
     // Protège /compte (client) : si pas connecté → /compte/connexion
@@ -56,8 +93,10 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(redirect);
     }
 
-    // Déjà connecté + sur /admin/login → /dashboard
-    if (path === "/admin/login" && user) {
+    // Admin déjà connecté + sur /admin/login → /dashboard.
+    // On teste `isAdmin` et non `user` : un client connecté serait sinon renvoyé
+    // vers /dashboard, qui le renverrait aussitôt ailleurs — boucle de redirection.
+    if (path === "/admin/login" && isAdmin) {
       const redirect = request.nextUrl.clone();
       redirect.pathname = "/dashboard";
       return NextResponse.redirect(redirect);
