@@ -60,7 +60,7 @@ Le consentement peut être retiré ou modifié à tout moment via le module de g
   },
   {
     title: "10. Contact",
-    body: `Pour toute question relative à la présente politique de cookies ou à l'utilisation des traceurs, l'utilisateur peut contacter la Société à : service.horizon224@gmail.com.`,
+    body: `Pour toute question relative à la présente politique de cookies ou à l'utilisation des traceurs, l'utilisateur peut contacter la Société à : support@demarchesciviques.fr.`,
   },
 ];
 

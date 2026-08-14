@@ -19,7 +19,7 @@ Cette Politique est établie conformément au Règlement (UE) 2016/679 (RGPD), �
     title: "Article 1 – Identité du responsable du traitement",
     body: `Le responsable du traitement est la société DÉMARCHES CIVIQUES (SASU), immatriculée au RCS de [ville] sous le numéro [SIREN/SIRET], dont le siège social est situé au 138 Avenue Victor Hugo, 75016 PARIS.
 
-Pour toute question relative à la protection de vos données personnelles, vous pouvez nous contacter à : service.horizon224@gmail.com.`,
+Pour toute question relative à la protection de vos données personnelles, vous pouvez nous contacter à : support@demarchesciviques.fr.`,
   },
   {
     title: "Article 2 – Données personnelles collectées",
@@ -84,7 +84,7 @@ DÉMARCHES CIVIQUES ne vend ni ne loue vos données personnelles à des tiers.`,
     title: "Article 9 – Droits des utilisateurs",
     body: `Conformément à la réglementation applicable, vous disposez des droits suivants : accès, rectification, effacement, limitation, opposition, portabilité et retrait du consentement.
 
-Ces droits peuvent être exercés en adressant une demande à service.horizon224@gmail.com, accompagnée d'un justificatif d'identité. Une réponse vous sera apportée dans les délais légaux.
+Ces droits peuvent être exercés en adressant une demande à support@demarchesciviques.fr, accompagnée d'un justificatif d'identité. Une réponse vous sera apportée dans les délais légaux.
 
 Si vous estimez que vos droits ne sont pas respectés, vous pouvez déposer une plainte auprès de la CNIL via leur site officiel : https://www.cnil.fr.`,
   },
@@ -98,7 +98,7 @@ Si vous estimez que vos droits ne sont pas respectés, vous pouvez déposer une 
   },
   {
     title: "Article 12 – Dispositions finales",
-    body: `La présente Politique est régie par le droit français. Pour toute question relative à la protection de vos données personnelles, vous pouvez nous contacter à service.horizon224@gmail.com.`,
+    body: `La présente Politique est régie par le droit français. Pour toute question relative à la protection de vos données personnelles, vous pouvez nous contacter à support@demarchesciviques.fr.`,
   },
 ];
 

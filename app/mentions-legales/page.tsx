@@ -17,7 +17,7 @@ const sections: LegalSection[] = [
 • Numéro de TVA intracommunautaire : [si applicable]
 • Président : Monsieur Ibrahima BARRY
 • Directeur de la publication : Monsieur Ibrahima BARRY
-• Contact : service.horizon224@gmail.com`,
+• Contact : support@demarchesciviques.fr`,
   },
   {
     title: "2. Hébergeur du Site",
@@ -47,7 +47,7 @@ DÉMARCHES CIVIQUES s'efforce de fournir des informations actualisées et fiable
     title: "5. Protection des données à caractère personnel",
     body: `DÉMARCHES CIVIQUES met en œuvre des traitements de données personnelles conformément au Règlement (UE) 2016/679 (RGPD) et à la loi Informatique et Libertés. Les données collectées via le site sont nécessaires à la gestion des demandes, à l'exécution des prestations et à la relation client.
 
-Conformément à la réglementation applicable, vous disposez des droits suivants : droit d'accès, de rectification, d'effacement, à la limitation du traitement, d'opposition et à la portabilité. Pour exercer vos droits, vous pouvez adresser votre demande à : service.horizon224@gmail.com.
+Conformément à la réglementation applicable, vous disposez des droits suivants : droit d'accès, de rectification, d'effacement, à la limitation du traitement, d'opposition et à la portabilité. Pour exercer vos droits, vous pouvez adresser votre demande à : support@demarchesciviques.fr.
 
 Pour plus d'informations, vous pouvez consulter la Politique de Confidentialité disponible sur le site.`,
   },

@@ -95,7 +95,7 @@ ${content}
   </td></tr>
   <tr><td style="background:#fafafc;padding:20px 32px;border-top:1px solid #eaeaef;color:#6b6b78;font-size:12px;">
     <div style="margin-bottom:6px;">
-      <strong style="color:#161616;">DÉMARCHES CIVIQUES</strong> · service.horizon224@gmail.com · +33 7 51 25 23 09
+      <strong style="color:#161616;">DÉMARCHES CIVIQUES</strong> · support@demarchesciviques.fr · +33 7 51 25 23 09
     </div>
     <div>Accompagnement administratif — pas un cabinet juridique. <span style="color:${MARIANNE_RED};">●</span></div>
   </td></tr>

@@ -23,7 +23,7 @@ Numéro de TVA intracommunautaire : [numéro].
 Directeur de la publication : M. Ibrahima BARRY (Président).
 
 Coordonnées de contact :
-• Adresse électronique : service.horizon224@gmail.com
+• Adresse électronique : support@demarchesciviques.fr
 • Adresse postale : 5 Allée du Foehn, 67540 Ostwald
 • Téléphone : +33 7 51 25 23 09
 
@@ -82,7 +82,7 @@ Important : les prestations constituent exclusivement des services d'assistance 
   },
   {
     title: "Article 10 – Données personnelles",
-    body: `DÉMARCHES CIVIQUES traite les données personnelles du Client conformément au RGPD et à la loi Informatique et Libertés. Les données sont utilisées exclusivement pour l'exécution des prestations, la gestion de la relation client et le respect des obligations légales. Le Client dispose de droits d'accès, de rectification, d'effacement, d'opposition et de portabilité, qu'il peut exercer en écrivant à service.horizon224@gmail.com. Voir la Politique de Confidentialité et la Politique de Cookies.`,
+    body: `DÉMARCHES CIVIQUES traite les données personnelles du Client conformément au RGPD et à la loi Informatique et Libertés. Les données sont utilisées exclusivement pour l'exécution des prestations, la gestion de la relation client et le respect des obligations légales. Le Client dispose de droits d'accès, de rectification, d'effacement, d'opposition et de portabilité, qu'il peut exercer en écrivant à support@demarchesciviques.fr. Voir la Politique de Confidentialité et la Politique de Cookies.`,
   },
   {
     title: "Article 11 – Propriété intellectuelle",
@@ -103,7 +103,7 @@ Important : les prestations constituent exclusivement des services d'assistance 
   {
     title: "Article 15 – Contact",
     body: `Pour toute question ou réclamation, le Client peut contacter la Société à :
-• service.horizon224@gmail.com
+• support@demarchesciviques.fr
 • 138 Avenue Victor Hugo, 75016 PARIS 16e arrondissement
 • +33 7 51 25 23 09`,
   },

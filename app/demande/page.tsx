@@ -88,10 +88,10 @@ export default function DemandePage() {
                           Email
                         </p>
                         <a
-                          href="mailto:service.horizon224@gmail.com"
+                          href="mailto:support@demarchesciviques.fr"
                           className="text-[14px] font-semibold hover:underline break-all"
                         >
-                          service.horizon224@gmail.com
+                          support@demarchesciviques.fr
                         </a>
                       </div>
                     </li>
@@ -106,7 +106,7 @@ export default function DemandePage() {
                           Horaires
                         </p>
                         <p className="text-[15px] font-semibold">
-                          Lun – Sam : 9h – 20h
+                          Lun – Sam : 9h – 18h
                         </p>
                       </div>
                     </li>
