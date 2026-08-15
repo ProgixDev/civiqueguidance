@@ -25,6 +25,14 @@ export async function signUp(
       email: input.email,
       password: input.password,
       options: {
+        // Sans `emailRedirectTo`, Supabase construit le lien de confirmation à
+        // partir du « Site URL » du tableau de bord — resté sur localhost, d'où
+        // des e-mails renvoyant vers une adresse injoignable.
+        //
+        // `window.location.origin` est l'origine réellement servie au visiteur :
+        // le lien revient donc toujours sur le bon domaine, sans dépendre d'un
+        // réglage externe ni d'une variable d'environnement.
+        emailRedirectTo: `${window.location.origin}/compte/connexion`,
         data: {
           full_name: input.fullName,
           phone: input.phone,

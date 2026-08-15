@@ -42,8 +42,15 @@ export async function POST(req: Request) {
   }
 
   const stripe = getStripe();
+  // Ordre de repli : variable explicite, puis l'origine de la requête (renseignée
+  // par Vercel), et localhost seulement en dernier recours. Sans le deuxième
+  // niveau, une variable oubliée en production renvoie le client vers localhost
+  // après paiement.
   const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "") ||
+    new URL(req.url).origin ||
+    "http://localhost:3000";
 
   // Rattache le paiement au client connecté (s'il y en a un) pour qu'il le
   // retrouve dans son espace. Un visiteur anonyme peut payer sans compte.
