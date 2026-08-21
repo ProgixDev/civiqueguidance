@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   saveDemande,
@@ -8,19 +8,16 @@ import {
   getServicePriceCents,
 } from "@/lib/demandes";
 
-const servicesOptions = [
-  { value: "demandeurs-asile", label: "Demandeurs d'asile" },
-  { value: "etudiants", label: "Étudiants (France)" },
-  { value: "titre-de-sejour", label: "Titre de séjour" },
-  { value: "naturalisation", label: "Naturalisation française" },
-  { value: "regroupement-familial", label: "Regroupement familial" },
-  { value: "regularisation", label: "Régularisation administrative" },
-  { value: "logement", label: "Aide au logement" },
-  { value: "cv", label: "CV & Lettre de motivation" },
-  { value: "dcem", label: "DCEM (enfants mineurs)" },
-  { value: "taj", label: "Effacement de TAJ" },
-  { value: "autre", label: "Autre démarche" },
-];
+/**
+ * Liste dérivée de SERVICE_LABELS, source unique des services proposés.
+ * Elle était auparavant recopiée ici, et toute nouvelle démarche ajoutée dans
+ * lib/demandes.ts restait invisible dans ce menu — le service « urgence » ne
+ * pouvait ainsi pas être présélectionné depuis la page d'accueil.
+ */
+const servicesOptions = Object.entries(SERVICE_LABELS).map(([value, label]) => ({
+  value,
+  label,
+}));
 
 export default function DemandeForm() {
   const searchParams = useSearchParams();
@@ -30,6 +27,22 @@ export default function DemandeForm() {
   // Transmis par le bloc « Demander un premier échange » de la page d'accueil,
   // pour éviter au visiteur de ressaisir ce qu'il vient déjà d'écrire.
   const prefilledName = searchParams.get("name") ?? "";
+
+  const formRef = useRef<HTMLFormElement>(null);
+
+  /**
+   * Quand on arrive depuis un bloc d'accroche de la page d'accueil (« premier
+   * échange », « urgences »), la navigation dépose le visiteur en haut de la
+   * page : il doit chercher lui-même le formulaire, alors qu'il vient
+   * justement de commencer à le remplir. On l'y amène.
+   *
+   * `block: "start"` plutôt que `center` pour garder l'en-tête du formulaire
+   * visible, et rien ne se déclenche sur une visite directe sans paramètre.
+   */
+  useEffect(() => {
+    if (!prefilledName && !prefilledService) return;
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [prefilledName, prefilledService]);
 
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
 
@@ -120,7 +133,7 @@ export default function DemandeForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5">
+    <form ref={formRef} onSubmit={onSubmit} className="space-y-5">
       {(prefilledDate || prefilledTime) && (
         <div className="bg-french-blue/5 border border-french-blue/15 rounded-xl p-4 flex items-center gap-3">
           <span className="material-symbols-outlined text-french-blue">
