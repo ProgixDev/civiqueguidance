@@ -12,6 +12,7 @@ import {
 import {
   loadAllDocuments,
   getAdminDocumentUrl,
+  deleteAdminDocument,
   type AdminDocument,
 } from "@/lib/admin-data";
 
@@ -167,7 +168,9 @@ function DashboardContent() {
       {activeTab === "prestations" && (
         <PrestationsPanel demandes={demandes} />
       )}
-      {activeTab === "documents" && <DocumentsPanel documents={documents} />}
+      {activeTab === "documents" && (
+        <DocumentsPanel documents={documents} onRefresh={refresh} />
+      )}
       {activeTab === "messages" && <MessagesPanel demandes={demandes} />}
       {activeTab === "paiements" && (
         <EmptyState
@@ -339,10 +342,38 @@ function PrestationsPanel({ demandes }: { demandes: Demande[] }) {
   );
 }
 
-function DocumentsPanel({ documents }: { documents: AdminDocument[] }) {
+function DocumentsPanel({
+  documents,
+  onRefresh,
+}: {
+  documents: AdminDocument[];
+  onRefresh: () => Promise<void>;
+}) {
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
   async function onDownload(doc: AdminDocument) {
     const url = await getAdminDocumentUrl(doc.storagePath);
     if (url) window.open(url, "_blank");
+  }
+
+  async function onDelete(doc: AdminDocument) {
+    // Suppression définitive d'une pièce d'identité : une confirmation nommant
+    // le fichier et son propriétaire évite l'erreur de ligne dans un tableau.
+    const ok = window.confirm(
+      `Supprimer définitivement « ${doc.filename} » de ${doc.clientName} ?\n\n` +
+        `Le fichier sera effacé du stockage et ne pourra pas être récupéré.`
+    );
+    if (!ok) return;
+
+    setDeletingId(doc.id);
+    const res = await deleteAdminDocument(doc.id);
+    setDeletingId(null);
+
+    if (!res.ok) {
+      window.alert(res.error);
+      return;
+    }
+    await onRefresh();
   }
 
   if (documents.length === 0) {
@@ -411,16 +442,31 @@ function DocumentsPanel({ documents }: { documents: AdminDocument[] }) {
                   })}
                 </td>
                 <td className="px-5 py-4 text-right whitespace-nowrap">
-                  <button
-                    type="button"
-                    onClick={() => onDownload(d)}
-                    className="inline-flex items-center gap-2 bg-french-blue/5 hover:bg-french-blue hover:text-white text-french-blue border border-french-blue/15 hover:border-french-blue px-3 py-2 rounded-lg text-[12px] font-bold transition-all"
-                  >
-                    <span className="material-symbols-outlined text-[16px]">
-                      download
-                    </span>
-                    Télécharger
-                  </button>
+                  <div className="inline-flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => onDownload(d)}
+                      className="inline-flex items-center gap-2 bg-french-blue/5 hover:bg-french-blue hover:text-white text-french-blue border border-french-blue/15 hover:border-french-blue px-3 py-2 rounded-lg text-[12px] font-bold transition-all"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">
+                        download
+                      </span>
+                      Télécharger
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onDelete(d)}
+                      disabled={deletingId === d.id}
+                      title="Supprimer définitivement ce document"
+                      aria-label={`Supprimer ${d.filename}`}
+                      className="inline-flex items-center gap-2 bg-marianne-red/5 hover:bg-marianne-red hover:text-white text-marianne-red border border-marianne-red/15 hover:border-marianne-red px-3 py-2 rounded-lg text-[12px] font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">
+                        {deletingId === d.id ? "hourglass_empty" : "delete"}
+                      </span>
+                      {deletingId === d.id ? "Suppression…" : "Supprimer"}
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

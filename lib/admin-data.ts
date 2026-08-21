@@ -67,6 +67,33 @@ export async function loadAllDocuments(): Promise<AdminDocument[]> {
   }
 }
 
+/**
+ * Supprime définitivement un document client (fichier + enregistrement).
+ *
+ * Passe par une route serveur : la suppression concerne le document d'un autre
+ * utilisateur, ce que les politiques RLS interdisent depuis le navigateur.
+ * L'autorisation est revérifiée côté serveur.
+ */
+export async function deleteAdminDocument(
+  id: string
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  try {
+    const res = await fetch("/api/admin/documents/delete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) {
+      return { ok: false, error: data.error ?? "La suppression a échoué." };
+    }
+    return { ok: true };
+  } catch (e) {
+    console.error("[admin-data] deleteAdminDocument:", e);
+    return { ok: false, error: "Suppression impossible : vérifiez votre connexion." };
+  }
+}
+
 export async function getAdminDocumentUrl(
   storagePath: string
 ): Promise<string | null> {

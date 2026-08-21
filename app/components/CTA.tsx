@@ -21,7 +21,7 @@ export default function CTA() {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full lg:w-auto shrink-0">
             {/* Action Secondaire : Urgences - Fine ligne rouge sobre */}
             <a
-              href="#urgence"
+              href="/demande?service=urgence"
               className="inline-flex items-center justify-center border border-marianne-red/30 hover:border-marianne-red text-marianne-red bg-marianne-red/2 hover:bg-marianne-red/5 px-6 py-3.5 rounded-xl text-[14px] font-bold tracking-wide transition-all duration-300 text-center"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-marianne-red mr-2 animate-pulse" />

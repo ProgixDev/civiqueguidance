@@ -27,6 +27,9 @@ export default function DemandeForm() {
   const prefilledService = searchParams.get("service") ?? "";
   const prefilledDate = searchParams.get("date") ?? "";
   const prefilledTime = searchParams.get("time") ?? "";
+  // Transmis par le bloc « Demander un premier échange » de la page d'accueil,
+  // pour éviter au visiteur de ressaisir ce qu'il vient déjà d'écrire.
+  const prefilledName = searchParams.get("name") ?? "";
 
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
 
@@ -142,6 +145,7 @@ export default function DemandeForm() {
             type="text"
             name="name"
             required
+            defaultValue={prefilledName}
             placeholder="Jean Dupont"
             className="form-input"
           />

@@ -176,6 +176,7 @@ export const SERVICE_LABELS: Record<string, string> = {
   cv: "CV & Lettre de motivation",
   dcem: "DCEM (enfants mineurs)",
   taj: "Effacement de TAJ",
+  urgence: "Urgence administrative",
   autre: "Autre démarche",
 };
 

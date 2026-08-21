@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import BrushUnderline from "./BrushUnderline";
 // Source unique des libellés de services : la même liste que /services et /demande.
 import { SERVICE_LABELS } from "@/lib/demandes";
@@ -90,6 +91,29 @@ export default function TrustFactors() {
 }
 
 function ConsultForm() {
+  const router = useRouter();
+
+  /**
+   * Ce bloc n'enregistre rien lui-même : il sert d'accroche et transmet ce que
+   * le visiteur a déjà saisi au formulaire complet de `/demande`, qui gère
+   * l'enregistrement, le paiement et les e-mails de confirmation.
+   *
+   * Même principe que le calendrier de la page d'accueil, qui passe déjà
+   * `?date=` et `?time=`. Sans ce gestionnaire, le formulaire se contentait de
+   * recharger la page et les données saisies étaient perdues.
+   */
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const params = new URLSearchParams();
+    const name = String(fd.get("name") ?? "").trim();
+    const service = String(fd.get("service") ?? "").trim();
+    if (name) params.set("name", name);
+    if (service) params.set("service", service);
+    const query = params.toString();
+    router.push(query ? `/demande?${query}` : "/demande");
+  };
+
   return (
     <div className="p-8 rounded-2xl bg-white border border-ink-black/[0.06] shadow-xl shadow-ink-black/[0.02] flex flex-col justify-between">
       <div>
@@ -102,7 +126,7 @@ function ConsultForm() {
           </p>
         </div>
 
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={onSubmit}>
           <div>
             <label className="block text-[10.5px] font-bold uppercase tracking-wider mb-2 text-ink-black/70">
               Nom et prénom
@@ -110,6 +134,8 @@ function ConsultForm() {
             <div className="relative">
               <input
                 type="text"
+                name="name"
+                autoComplete="name"
                 placeholder="Ex : Jean Dupont"
                 className="w-full bg-transparent border border-ink-black/15 rounded-xl py-3 px-4 text-[14.5px] text-ink-black placeholder:text-ink-black/30 focus:border-french-blue focus:ring-1 focus:ring-french-blue focus:outline-none transition-all"
               />
