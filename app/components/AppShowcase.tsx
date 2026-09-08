@@ -124,7 +124,9 @@ export default function AppShowcase() {
               {/* Boutons de téléchargement */}
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
-                  href="#"
+                  href="https://apps.apple.com/fr/app/objectif-civique/id6793272755"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-3 bg-white text-ink-black hover:bg-white/90 px-6 py-3.5 rounded-xl transition-all shadow-md"
                 >
                   <span className="material-symbols-outlined text-[26px]">
@@ -140,7 +142,9 @@ export default function AppShowcase() {
                   </div>
                 </a>
                 <a
-                  href="#"
+                  href="https://play.google.com/store/apps/details?id=com.horizon224.objectifcivique&hl=fr"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-3 bg-white text-ink-black hover:bg-white/90 px-6 py-3.5 rounded-xl transition-all shadow-md"
                 >
                   <span className="material-symbols-outlined text-[26px]">
