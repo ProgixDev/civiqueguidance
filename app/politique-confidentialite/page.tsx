@@ -4,6 +4,7 @@ export const metadata = {
   title: "Politique de confidentialité | DÉMARCHES CIVIQUES",
   description:
     "Politique de confidentialité de DÉMARCHES CIVIQUES : collecte, utilisation, conservation et protection de vos données personnelles (RGPD).",
+  alternates: { canonical: "/politique-confidentialite" },
 };
 
 const sections: LegalSection[] = [

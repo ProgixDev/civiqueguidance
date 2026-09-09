@@ -8,6 +8,7 @@ export const metadata = {
   title: "Demander une prestation | DÉMARCHES CIVIQUES",
   description:
     "Décrivez votre besoin et nous vous proposerons un accompagnement adapté à votre situation.",
+  alternates: { canonical: "/demande" },
 };
 
 export default function DemandePage() {

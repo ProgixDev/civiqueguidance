@@ -19,9 +19,17 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = services[slug];
   if (!service) return { title: "Service introuvable | DÉMARCHES CIVIQUES" };
+  const title = `${service.title} | DÉMARCHES CIVIQUES`;
   return {
-    title: `${service.title} | DÉMARCHES CIVIQUES`,
+    title,
     description: service.intro,
+    alternates: { canonical: `/services/${slug}` },
+    openGraph: {
+      type: "website",
+      title,
+      description: service.intro,
+      url: `/services/${slug}`,
+    },
   };
 }
 
@@ -35,9 +43,52 @@ export default async function ServicePage({
   if (!service) notFound();
 
   const priceCents = getServicePriceCents(slug);
+  const pageUrl = `https://demarchesciviques.fr/services/${slug}`;
+
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: service.title,
+    name: `${service.title} | DÉMARCHES CIVIQUES`,
+    description: service.intro,
+    url: pageUrl,
+    areaServed: "FR",
+    provider: {
+      "@type": "ProfessionalService",
+      name: "DÉMARCHES CIVIQUES",
+      url: "https://demarchesciviques.fr",
+    },
+    ...(priceCents !== null
+      ? {
+          offers: {
+            "@type": "Offer",
+            price: (priceCents / 100).toFixed(2),
+            priceCurrency: "EUR",
+          },
+        }
+      : {}),
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: "https://demarchesciviques.fr" },
+      { "@type": "ListItem", position: 2, name: "Services", item: "https://demarchesciviques.fr/services" },
+      { "@type": "ListItem", position: 3, name: service.title, item: pageUrl },
+    ],
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Navbar />
       <main className="py-12 sm:py-20">
         <div className="max-w-content mx-auto px-page">
@@ -191,13 +242,10 @@ export default async function ServicePage({
               {priceCents !== null ? (
                 <div className="flex items-baseline gap-2">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">
-                    Tarif
+                    Tarif indicatif
                   </span>
                   <span className="text-3xl sm:text-4xl font-black text-french-blue">
                     {formatPriceCents(priceCents)}
-                  </span>
-                  <span className="text-[13px] font-semibold text-on-surface-variant">
-                    réglé en ligne lors de la demande
                   </span>
                 </div>
               ) : (
@@ -215,7 +263,7 @@ export default async function ServicePage({
               href={`/demande?service=${slug}`}
               className="inline-flex items-center justify-center bg-french-blue hover:bg-[#000066] text-white px-7 py-4 rounded-xl text-[15px] font-bold tracking-wide shadow-md transition-all whitespace-nowrap"
             >
-              {priceCents !== null ? "Demander & payer" : "Demander un devis"}
+              {priceCents !== null ? "Prendre rendez-vous" : "Demander un devis"}
               <span
                 className="material-symbols-outlined text-[16px] ml-2"
                 style={{ fontVariationSettings: "'wght' 300" }}

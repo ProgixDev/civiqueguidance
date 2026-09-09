@@ -4,6 +4,7 @@ export const metadata = {
   title: "Politique de cookies | DÉMARCHES CIVIQUES",
   description:
     "Politique de cookies de DÉMARCHES CIVIQUES : types de cookies, gestion du consentement, durée de conservation et paramétrage.",
+  alternates: { canonical: "/politique-cookies" },
 };
 
 const sections: LegalSection[] = [

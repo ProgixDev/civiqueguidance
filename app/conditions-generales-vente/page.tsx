@@ -4,6 +4,7 @@ export const metadata = {
   title: "Conditions Générales de Vente | DÉMARCHES CIVIQUES",
   description:
     "CGV de DÉMARCHES CIVIQUES : objet, services, commande et paiement, rétractation, responsabilité et données personnelles.",
+  alternates: { canonical: "/conditions-generales-vente" },
 };
 
 const sections: LegalSection[] = [

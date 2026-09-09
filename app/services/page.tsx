@@ -11,6 +11,7 @@ export const metadata = {
   title: "Nos Services | DÉMARCHES CIVIQUES",
   description:
     "L'ensemble de nos prestations d'accompagnement administratif. Nous vous aidons à constituer des dossiers solides et conformes.",
+  alternates: { canonical: "/services" },
 };
 
 type ServiceListItem = {

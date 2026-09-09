@@ -7,6 +7,7 @@ export const metadata = {
   title: "À propos | DÉMARCHES CIVIQUES",
   description:
     "DÉMARCHES CIVIQUES est un service d'accompagnement administratif privé et indépendant — pas un cabinet juridique.",
+  alternates: { canonical: "/a-propos" },
 };
 
 const principes = [

@@ -4,6 +4,7 @@ export const metadata = {
   title: "Mentions légales | DÉMARCHES CIVIQUES",
   description:
     "Mentions légales du site DÉMARCHES CIVIQUES : éditeur, hébergeur, propriété intellectuelle et responsabilité.",
+  alternates: { canonical: "/mentions-legales" },
 };
 
 const sections: LegalSection[] = [
