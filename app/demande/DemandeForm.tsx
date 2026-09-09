@@ -2,11 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  saveDemande,
-  SERVICE_LABELS,
-  getServicePriceCents,
-} from "@/lib/demandes";
+import { saveDemande, SERVICE_LABELS } from "@/lib/demandes";
 
 /**
  * Liste dérivée de SERVICE_LABELS, source unique des services proposés.
@@ -76,33 +72,8 @@ export default function DemandeForm() {
       return;
     }
 
-    // Paiement immédiat pour les services à tarif fixe : on enchaîne sur Stripe
-    // Checkout. Les services « sur devis » (DCEM, TAJ, autre) affichent juste la
-    // confirmation — le conseiller enverra un devis. Si Stripe n'est pas
-    // configuré ou échoue, on ne bloque pas : on retombe sur la confirmation.
-    const amountCents = getServicePriceCents(service);
-    if (amountCents) {
-      try {
-        const res = await fetch("/api/stripe/checkout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            amountCents,
-            description: `Accompagnement — ${serviceLabel}`,
-            customerEmail: email,
-            demandeId: result.id,
-          }),
-        });
-        const data = await res.json();
-        if (data.ok && data.url) {
-          window.location.assign(data.url); // redirection vers Stripe
-          return;
-        }
-      } catch {
-        // silencieux : on affiche la confirmation ci-dessous
-      }
-    }
-
+    // Pas de paiement à la prise de rendez-vous : le conseiller échange avec
+    // le client puis facture séparément (demande client, cf. historique).
     setStatus("sent");
   }
 
