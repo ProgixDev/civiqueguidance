@@ -156,6 +156,24 @@ export function clientConfirmationTemplate(d: {
   };
 }
 
+/** Email de vérification envoyé à l'inscription, avec le lien de confirmation Supabase. */
+export function accountConfirmationTemplate(d: {
+  name: string;
+  confirmLink: string;
+}): { subject: string; html: string } {
+  return {
+    subject: `Confirmez votre compte — DÉMARCHES CIVIQUES`,
+    html: shell(`
+      <h1 style="margin:0 0 16px;font-size:22px;font-weight:800;color:#161616;">Bienvenue ${escapeHtml(d.name)} 👋</h1>
+      <p style="margin:0 0 24px;font-size:15px;color:#454653;line-height:1.6;">Confirmez votre adresse email pour activer votre espace client et suivre vos démarches.</p>
+      <p style="margin:0 0 24px;">
+        <a href="${d.confirmLink}" style="display:inline-block;background:${FRENCH_BLUE};color:#ffffff;font-weight:700;font-size:14px;text-decoration:none;padding:14px 28px;border-radius:10px;">Confirmer mon compte</a>
+      </p>
+      <p style="margin:0;font-size:12px;color:#6b6b78;line-height:1.6;">Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :<br><a href="${d.confirmLink}" style="color:${FRENCH_BLUE};word-break:break-all;">${d.confirmLink}</a></p>
+    `),
+  };
+}
+
 /** Reçu envoyé au client après paiement Stripe. */
 export function receiptTemplate(p: {
   customerName: string;

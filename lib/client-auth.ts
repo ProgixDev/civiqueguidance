@@ -16,30 +16,18 @@ export type SignupInput = {
 export async function signUp(
   input: SignupInput
 ): Promise<{ ok: true } | { ok: false; error: string }> {
-  if (!isSupabaseConfigured()) {
-    return { ok: false, error: "Supabase n'est pas configuré." };
-  }
+  // Passe par l'API serveur (auth.admin.generateLink) plutôt que
+  // supabase.auth.signUp() côté client : ça évite l'email de confirmation
+  // intégré de Supabase (expéditeur générique) et permet d'envoyer le lien
+  // nous-mêmes via Zoho (support@demarchesciviques.fr).
   try {
-    const supabase = createClient();
-    const { error } = await supabase.auth.signUp({
-      email: input.email,
-      password: input.password,
-      options: {
-        // Sans `emailRedirectTo`, Supabase construit le lien de confirmation à
-        // partir du « Site URL » du tableau de bord — resté sur localhost, d'où
-        // des e-mails renvoyant vers une adresse injoignable.
-        //
-        // `window.location.origin` est l'origine réellement servie au visiteur :
-        // le lien revient donc toujours sur le bon domaine, sans dépendre d'un
-        // réglage externe ni d'une variable d'environnement.
-        emailRedirectTo: `${window.location.origin}/compte/connexion`,
-        data: {
-          full_name: input.fullName,
-          phone: input.phone,
-        },
-      },
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(input),
     });
-    if (error) return { ok: false, error: error.message };
+    const data = await res.json();
+    if (!data.ok) return { ok: false, error: data.error ?? "Erreur inconnue." };
     return { ok: true };
   } catch (e) {
     return {
