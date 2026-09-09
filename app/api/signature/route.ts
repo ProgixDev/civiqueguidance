@@ -130,7 +130,7 @@ export async function POST(req: Request) {
     try {
       await sendEmail({
         to: user.email,
-        bcc: process.env.GMAIL_USER, // copie à l'administration (2e Partie)
+        bcc: process.env.EMAIL_USER, // copie à l'administration (2e Partie)
         subject: tpl.subject,
         html: tpl.html,
         attachments: [

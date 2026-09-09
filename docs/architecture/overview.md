@@ -44,7 +44,7 @@ The system as it actually is today. Honest, not aspirational.
 
 - **Supabase** — auth, Postgres, Storage. Public env: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Server/webhook uses the service role.
 - **Stripe** — Checkout sessions (`/api/stripe/checkout`) and webhook (`/api/stripe/webhook`). Env: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `NEXT_PUBLIC_SITE_URL`.
-- **Gmail SMTP via nodemailer** — transactional email (`lib/email.ts`). Env: `GMAIL_USER`, plus `ADMIN_NOTIFICATION_EMAIL`.
+- **Zoho Mail SMTP via nodemailer** — transactional email (`lib/email.ts`). Env: `EMAIL_USER`, `EMAIL_PASSWORD`, plus `ADMIN_NOTIFICATION_EMAIL`.
 - **Remote images** — `images.unsplash.com`, `lh3.googleusercontent.com` (allowed in `next.config.ts`).
 - **Fonts/icons** — Marianne (gouvfr CDN) and Material Symbols, preloaded in `app/layout.tsx`.
 

@@ -15,7 +15,7 @@ import {
  *   1. À l'admin (notification d'une nouvelle demande)
  *   2. Au visiteur (accusé de réception)
  *
- * Silencieux si Gmail SMTP n'est pas configuré (200 OK avec note).
+ * Silencieux si l'email SMTP n'est pas configuré (200 OK avec note).
  */
 export async function POST(req: Request) {
   if (!isEmailConfigured()) {
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
   }
 
   const adminEmail =
-    process.env.ADMIN_NOTIFICATION_EMAIL || process.env.GMAIL_USER!;
+    process.env.ADMIN_NOTIFICATION_EMAIL || process.env.EMAIL_USER!;
 
   const adminTpl = notifyAdminTemplate(body);
   const clientTpl = clientConfirmationTemplate({

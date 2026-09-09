@@ -1,27 +1,30 @@
 import nodemailer from "nodemailer";
 
 /**
- * Helper d'envoi d'emails via Gmail SMTP.
+ * Helper d'envoi d'emails via SMTP Zoho Mail (messagerie du domaine
+ * demarchesciviques.fr — voir les enregistrements MX).
  * Configuration requise dans .env.local :
- *   GMAIL_USER=service.horizon224@gmail.com
- *   GMAIL_APP_PASSWORD=xxxx xxxx xxxx xxxx   (App Password généré depuis Google Account)
+ *   EMAIL_USER=support@demarchesciviques.fr
+ *   EMAIL_PASSWORD=xxxx   (mot de passe du compte, ou mot de passe d'application si 2FA actif)
  */
 
 export function isEmailConfigured(): boolean {
-  return !!process.env.GMAIL_USER && !!process.env.GMAIL_APP_PASSWORD;
+  return !!process.env.EMAIL_USER && !!process.env.EMAIL_PASSWORD;
 }
 
 function getTransporter() {
   if (!isEmailConfigured()) {
     throw new Error(
-      "Gmail SMTP non configuré. Ajoute GMAIL_USER et GMAIL_APP_PASSWORD dans .env.local."
+      "Email SMTP non configuré. Ajoute EMAIL_USER et EMAIL_PASSWORD dans .env.local."
     );
   }
   return nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.zoho.eu",
+    port: 465,
+    secure: true,
     auth: {
-      user: process.env.GMAIL_USER!,
-      pass: process.env.GMAIL_APP_PASSWORD!.replace(/\s/g, ""),
+      user: process.env.EMAIL_USER!,
+      pass: process.env.EMAIL_PASSWORD!,
     },
   });
 }
@@ -48,7 +51,7 @@ export async function sendEmail(
   try {
     const transporter = getTransporter();
     await transporter.sendMail({
-      from: `"DÉMARCHES CIVIQUES" <${process.env.GMAIL_USER}>`,
+      from: `"DÉMARCHES CIVIQUES" <${process.env.EMAIL_USER}>`,
       to: params.to,
       bcc: params.bcc,
       subject: params.subject,
