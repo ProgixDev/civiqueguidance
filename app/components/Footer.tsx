@@ -20,7 +20,7 @@ const columns = [
     links: [
       { label: "Contact", href: "/demande" },
       { label: "Mon compte", href: "/compte" },
-      { label: "FAQ", href: "#" },
+      { label: "FAQ", href: "/faq" },
     ],
   },
   {
