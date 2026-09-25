@@ -52,7 +52,7 @@ export default function AppShowcase() {
                 <div className="relative w-56 sm:w-64 lg:w-72 aspect-square rounded-[28px] overflow-hidden shadow-2xl ring-1 ring-white/20">
                   <Image
                     src="/logo_de_lapp.png"
-                    alt="Logo Objectif Civique"
+                    alt="Logo Démarches Civiques"
                     fill
                     className="object-cover"
                     sizes="(min-width: 1024px) 18rem, 14rem"
@@ -70,7 +70,7 @@ export default function AppShowcase() {
                   Nouveau
                 </div>
                 <div className="absolute -bottom-3 -left-3 bg-marianne-red text-white rounded-full px-3 py-1.5 text-[11px] font-bold shadow-lg">
-                  Objectif Civique
+                  Démarches Civiques
                 </div>
               </div>
             </div>
@@ -92,7 +92,7 @@ export default function AppShowcase() {
 
               <p className="text-[15px] sm:text-[17px] leading-7 text-white/80 mb-8 max-w-2xl">
                 Préparez votre avenir en France avec{" "}
-                <span className="font-bold text-white">Objectif Civique</span>.
+                <span className="font-bold text-white">Démarches Civiques</span>.
                 Des milliers de questions officielles, des simulations
                 intelligentes et un suivi personnalisé.
               </p>
