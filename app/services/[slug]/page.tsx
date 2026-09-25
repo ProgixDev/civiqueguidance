@@ -7,6 +7,16 @@ import BrushUnderline from "@/app/components/BrushUnderline";
 import { getServicePriceCents, formatPriceCents } from "@/lib/demandes";
 import { services } from "./data";
 
+// Titres SEO ciblant ce que les gens tapent dans Google (démarche + verbe d'action).
+const SEO_TITLES: Record<string, string> = {
+  "demandeurs-asile": "Aide à la demande d'asile en France (OFPRA, CNDA)",
+  "titre-de-sejour": "Aide titre de séjour : demande et renouvellement en préfecture",
+  naturalisation: "Aide à la demande de naturalisation française",
+  "regroupement-familial": "Aide au regroupement familial en France",
+  regularisation: "Aide à la régularisation administrative en France",
+  logement: "Aide aux démarches de logement pour étrangers en France",
+};
+
 export function generateStaticParams() {
   return Object.keys(services).map((slug) => ({ slug }));
 }
@@ -19,7 +29,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = services[slug];
   if (!service) return { title: "Service introuvable | DÉMARCHES CIVIQUES" };
-  const title = `${service.title} | DÉMARCHES CIVIQUES`;
+  const title = `${SEO_TITLES[slug] ?? service.title} | DÉMARCHES CIVIQUES`;
   return {
     title,
     description: service.intro,
